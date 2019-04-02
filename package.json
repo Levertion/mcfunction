@@ -1,0 +1,24 @@
+{
+    "name": "mcfunction-root",
+    "private": true,
+    "scripts": {
+        "test": "lerna exec test",
+        "lint": "lerna run lint",
+        "format:write": "npm run format -- --write",
+        "format": "prettier **/*.{ts,json,yml,md}",
+        "preinstall": "npx lerna bootstrap && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Levertion/mcfunction.git"
+    },
+    "devDependencies": {
+        "lerna": "^3.13.1",
+        "prettier": "1.16.4"
+    },
+    "license": "MIT",
+    "prettier": {
+        "tabWidth": 4,
+        "proseWrap": "always"
+    }
+}

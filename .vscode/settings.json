@@ -1,0 +1,13 @@
+{
+    // Allow use of prettier extension solely
+    "typescript.format.enable": false,
+    // Consistent finalNewLine
+    "files.insertFinalNewline": true,
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/lib": true
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.tslint": true
+    }
+}

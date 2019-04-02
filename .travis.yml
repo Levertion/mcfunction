@@ -1,0 +1,22 @@
+language: node_js
+branches:
+    only:
+        # This is where pull requests from "bors r+" are built.
+        - staging
+        # This is where pull requests from "bors try" are built.
+        - trying
+        - master
+sudo: false
+node_js:
+    # TODO: Determine if we want to support any lower node versions
+    - "10"
+before_install:
+    - npm install -g npm@6
+install:
+    # Install all dependencies
+    - npx lerna bootstrap
+script:
+    - npm test
+    - npm run lint
+    - npm run format -- --list-different
+    # - npm run publish
