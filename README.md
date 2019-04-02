@@ -24,6 +24,7 @@ dependencies<sup>[1](#footnote1)</sup>.
 
 `npm run format:write` runs the [prettier](https://github.com/prettier/prettier)
 formatter.
+
 <!-- TODO: Consider whether it is worthwhile installing a pre-commit hook
 using [husky](https://github.com/typicode/husky). -->
 
@@ -32,6 +33,7 @@ Any new additions must be tested where this is possible. More detail about each
 package's testing strategy can be found in their respective `README.md`s
 
 We use [bors](https://bors.tech/) to manage merging pull requests.
+
 <!-- TODO: set this up on Github -->
 
 The packages are currently only tested using node 10, although this could be
@@ -50,7 +52,7 @@ Distributed under the terms of the [MIT License](LICENSE).
 
 ### Footnotes
 
-<a id="footnote1">1</a>: This uses `npm`'s `preinstall` script stage, which
-runs on every `npm install`. This runs `lerna bootstrap` rather than
-`npm install`. TODO: Determine if this is a common pattern and should be
-documented or should be dropped.
+<a id="footnote1">1</a>: This uses `npm`'s `preinstall` script stage, which runs
+on every `npm install`. This runs `lerna bootstrap` rather than `npm install`.
+TODO: Determine if this is a common pattern and should be documented or should
+be dropped.
