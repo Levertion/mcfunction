@@ -14,6 +14,8 @@ Tools for working with Minecraft commands. Current packages:
 <!-- - mcfunction-verifier: A command line frontend to command-parser, which tests -->
 <!-- - editors/vscode: A vscode extension using mcfunction-langserver.
     TODO: Determine if this should be in this repository -->
+<!-- mc-nbt-paths: TODO: Check if @MrYurihi will allow us to move this into this repository -->
+<!-- minecraft-json-schemas: JSON schemas for the JSON files used by minecraft -->
 
 ### Development
 
@@ -49,6 +51,8 @@ release. This however requires some engineering work.
 ### License
 
 Distributed under the terms of the [MIT License](LICENSE).
+
+<!-- json-schemas and nbt-paths are instead licensed under creative commons licenses -->
 
 ### Footnotes
 
