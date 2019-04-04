@@ -1,0 +1,42 @@
+{
+    "name": "binary-nbt",
+    "version": "0.0.0",
+    "description": "A serialiser/deserialiser for the Minecraft NBT format",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "compile": "tsc",
+        "lint": "tslint -c ../tslint.json -p ./tsconfig.json",
+        "prepare": "npm run compile"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Levertion/mcfunction.git"
+    },
+    "keywords": [
+        "Minecraft",
+        "nbt"
+    ],
+    "author": "Levertion",
+    "contributors": [
+        "MrYurihi"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Levertion/mcfunction/issues"
+    },
+    "devDependencies": {
+        "@types/node": "10.0.3",
+        "@types/long": "4.0.0",
+        "typescript": "3.4.1",
+        "mocha": "6.0.2",
+        "ts-mocha": "6.0.0",
+        "tslint": "5.14.0"
+    },
+    "dependencies": {
+        "tslib": "1.9.3",
+        "long": "4.0.0"
+    },
+    "homepage": "https://github.com/Levertion/mcfunction#readme"
+}

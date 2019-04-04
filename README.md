@@ -17,6 +17,9 @@ Tools for working with Minecraft commands. Current packages:
 <!-- mc-nbt-paths: TODO: Check if @MrYurihi will allow us to move this into this repository -->
 <!-- minecraft-json-schemas: JSON schemas for the JSON files used by minecraft -->
 
+-   binary-nbt: A serializer and deserializer for (binary) NBT data
+-   minecraft-nbt-types: Typescript types for (some) Vanilla NBT files
+
 ### Development
 
 This repository is developed as a monorepo using [lerna](https://lernajs.io/).
@@ -36,10 +39,9 @@ package's testing strategy can be found in their respective `README.md`s
 
 We use [bors](https://bors.tech/) to manage merging pull requests.
 
-<!-- TODO: set this up on Github -->
-
 The packages are currently only tested using node 10, although this could be
-changed should a compelling use case arise.
+changed should a compelling use case arise. Open an issue if you are require
+this!
 
 ### npm packages
 
