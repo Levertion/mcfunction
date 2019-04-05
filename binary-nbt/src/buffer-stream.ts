@@ -62,7 +62,8 @@ export class BufferStream {
     }
 
     private expand_by(amount: number) {
-        if (this.index + amount >= this.buf.length) {
+        // We write to `this.index` first, so this should be a strictly >
+        if (this.index + amount > this.buf.length) {
             this.buf = Buffer.alloc(this.buf.length * 2, this.buf);
         }
     }

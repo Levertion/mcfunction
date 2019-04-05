@@ -328,5 +328,11 @@ function serializeArrayContents(
                 } in array of that type`
             );
         }
+        serializeInto({
+            stream,
+            value: item,
+            returnTagType: false,
+            tagTypeHint: itemType
+        });
     }
 }
