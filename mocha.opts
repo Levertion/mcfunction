@@ -1,0 +1,5 @@
+--ui bdd
+--colors
+--timeout 999999
+--require ts-mocha
+test/**/*.ts

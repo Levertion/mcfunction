@@ -4,11 +4,17 @@ import * as Long from "long";
 import { ok } from "assert";
 
 /**
- * Serialize from a value into an equivalent NBT value
+ * Serialize from a JavaScript value into an equivalent NBT value.
+ *
+ * If `value` this was deserialized from NBT using `deserializeNBT`,
+ * this should create an identical NBT value to the one it was originally
+ * deserialized from(1).
+ *
+ * (1) This is only guaranteed to be true if the `useMaps` flag was set,
+ * due to the non-guaranteed iteration order of the object primitive.
  */
-export function SerializeNBT(value: unknown) {
+export function serializeNBT(value: unknown) {
     const buffer = new BufferStream(Buffer.alloc(1024)); // Size is doubled on every write past end
-
     serializeInto({ value, stream: buffer, serializeName: true });
     return buffer.getData();
 }
@@ -116,7 +122,7 @@ function serializeObjectAsTagType(
     returnTagType?: boolean
 ): TagType | undefined {
     if (Array.isArray(value)) {
-        serializeArray(stream, type, value);
+        return serializeArray(stream, type, value, returnTagType);
     } else if (value instanceof String) {
         if (type === undefined || type === TagType.TAG_STRING) {
             if (returnTagType === true) {
@@ -134,11 +140,13 @@ function serializeObjectAsTagType(
             );
         }
     } else if (value instanceof Number || value instanceof Long) {
-        serializeNumber(type, value, stream, returnTagType);
+        return serializeNumber(type, value, stream, returnTagType);
     } else {
+        if (returnTagType) return TagType.TAG_COMPOUND;
+        if (returnTagType === undefined) stream.setByte(TagType.TAG_COMPOUND);
         const entries =
             value instanceof Map ? [...value] : Object.entries(value);
-        stream.setByte(TagType.TAG_COMPOUND);
+
         for (const [name, val] of entries) {
             const tagType = serializeInto({
                 value: val,
@@ -212,27 +220,36 @@ function serializeNumber(
 function serializeArray(
     stream: BufferStream,
     type: TagType | undefined,
-    value: any[]
-) {
+    value: any[],
+    returnTagType?: boolean
+): TagType | undefined {
     switch (type) {
         case undefined:
         case TagType.TAG_LIST:
+            if (returnTagType) {
+                return TagType.TAG_LIST;
+            }
+            if (returnTagType === undefined) {
+                stream.setByte(TagType.TAG_LIST);
+            }
             let itemType: TagType = Reflect.get(value, NBTListSymbol);
-            if (!itemType && value.length > 0) {
-                const arrayType = serializeInto({
-                    value: value[0],
-                    stream,
-                    returnTagType: true
-                });
-                if (arrayType) {
-                    itemType = arrayType;
+            if (!itemType) {
+                if (value.length > 0) {
+                    const arrayType = serializeInto({
+                        value: value[0],
+                        stream,
+                        returnTagType: true
+                    });
+                    if (arrayType) {
+                        itemType = arrayType;
+                    } else {
+                        ok(false, `Internal error serializing ${value[0]}`);
+                    }
                 } else {
-                    ok(false, `Internal error serializing ${value[0]}`);
+                    throw new TypeError(
+                        "Cannot serialize an empty list without a type hint"
+                    );
                 }
-            } else {
-                throw new TypeError(
-                    "Cannot serialize an empty list without a type hint"
-                );
             }
             if (itemType) {
                 stream.setByte(itemType);
@@ -240,12 +257,21 @@ function serializeArray(
             }
             break;
         case TagType.TAG_BYTE_ARRAY:
+            if (returnTagType) return TagType.TAG_BYTE_ARRAY;
+            if (returnTagType === undefined)
+                stream.setByte(TagType.TAG_BYTE_ARRAY);
             serializeArrayContents(stream, TagType.TAG_BYTE, value);
             break;
         case TagType.TAG_INT_ARRAY:
+            if (returnTagType) return TagType.TAG_INT_ARRAY;
+            if (returnTagType === undefined)
+                stream.setByte(TagType.TAG_INT_ARRAY);
             serializeArrayContents(stream, TagType.TAG_INT, value);
             break;
         case TagType.TAG_LONG_ARRAY:
+            if (returnTagType) return TagType.TAG_LONG_ARRAY;
+            if (returnTagType === undefined)
+                stream.setByte(TagType.TAG_LONG_ARRAY);
             serializeArrayContents(stream, TagType.TAG_LONG, value);
             break;
         default:
@@ -253,6 +279,7 @@ function serializeArray(
                 `Cannot serialize array ${value} as a ${TagType[type]}`
             );
     }
+    return undefined;
 }
 
 function serializeArrayContents(

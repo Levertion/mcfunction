@@ -8,13 +8,19 @@ import { TagType, NBTNameSymbol, NBTListSymbol, createNBTType } from "./tags";
 const unzipAsync = promisify<zlib.InputType, Buffer>(zlib.unzip);
 
 /**
+ * Deserialize an NBT value from `buffer`. This returns an object which is
+ * the closest JavaScript equivalent of the input.
+ * `TAG_LONG`s, which cannot be losslessly represented in a JavaScript
+ * `number`, are deserialized as `Long`s from the
+ * [`long`](https://www.npmjs.com/package/long) package.
+ *
  * Deserialize an NBT value from `buffer`. This returns an object which is the closest JavaScript equivalent of the input.
  * `TAG_LONG`s, which cannot be losslessly represented in a JavaScript `number`, are deserialized as `Long`s from the [`long`](https://www.npmjs.com/package/long) package.
  *
- * The resulting object can be serialized into the same NBT value. This is explained fully in the README.
+ * The resulting object can be serialized into the same NBT value. This is explained fully in the `README`.
  *
  * @param buffer The buffer to deserialize the NBT from
- * @param useMaps to use ES6 maps for compounds. This is useful to retain insertion order
+ * @param useMaps Whether to use ES6 `Map`s for compounds. This is useful to retain insertion order
  * @param named Whether or not the root is named. For example, a typical structure is {"":<data>}. (Reasoning for this required)
  *
  * @throws If the NBT is malformed. E.g. an invalid tag type is specified or the NBT is truncated.
@@ -51,13 +57,20 @@ export async function deserializeCompressedNBT<T = unknown>(
     useMaps: boolean = false,
     named: boolean = true
 ): Promise<T> {
-    let unzipbuf;
+    return deserializeNBT<T>(await decompressIfNeeded(buffer), useMaps, named);
+}
+
+/**
+ * Decompress a `Buffer` if required, returning the original Buffer otherwise
+ *
+ * Only exposed for tests
+ */
+export async function decompressIfNeeded(buffer: Buffer): Promise<Buffer> {
     try {
-        unzipbuf = await unzipAsync(buffer);
+        return await unzipAsync(buffer);
     } catch (e) {
-        unzipbuf = buffer;
+        return buffer;
     }
-    return deserializeNBT<T>(unzipbuf, useMaps, named);
 }
 
 function deserializeTag(

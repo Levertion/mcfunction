@@ -2,7 +2,7 @@
     "name": "mcfunction-root",
     "private": true,
     "scripts": {
-        "test": "lerna exec test",
+        "test": "lerna run test",
         "lint": "lerna run lint",
         "format:write": "npm run format -- --write",
         "format": "prettier **/*.{ts,json,yml,md}",

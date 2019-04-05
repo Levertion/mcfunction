@@ -5,7 +5,7 @@
 export const NBTListSymbol = Symbol("NBT list type");
 /**
  * The `Symbol` used to store the NBT Tag Type of a JavaScript `Object`.
- * 
+ *
  * To set this for your own objects, use `createNBTType`. This can be inferred in a majority of cases.
  */
 export const NBTTypeSymbol = Symbol("NBT node type");

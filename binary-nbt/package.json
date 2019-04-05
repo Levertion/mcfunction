@@ -5,7 +5,7 @@
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "mocha --opts ../mocha.opts",
         "compile": "tsc",
         "lint": "tslint -c ../tslint.json -p ./tsconfig.json",
         "prepare": "npm run compile"
@@ -29,6 +29,7 @@
     "devDependencies": {
         "@types/node": "10.0.3",
         "@types/long": "4.0.0",
+        "@types/mocha": "5.2.0",
         "typescript": "3.4.1",
         "mocha": "6.0.2",
         "ts-mocha": "6.0.0",
@@ -38,5 +39,8 @@
         "tslib": "1.9.3",
         "long": "4.0.0"
     },
-    "homepage": "https://github.com/Levertion/mcfunction#readme"
+    "homepage": "https://github.com/Levertion/mcfunction#readme",
+    "files": [
+        "lib/**"
+    ]
 }
