@@ -19,6 +19,12 @@ export function serializeNBT(value: unknown) {
     return buffer.getData();
 }
 
+export function serializeNBTDebug(value: unknown, defaultBuffer?: Buffer) {
+    const buffer = new BufferStream(defaultBuffer || Buffer.alloc(1024), true);
+    serializeInto({ value, stream: buffer, serializeName: true });
+    return buffer.getData();
+}
+
 function serializeInto({
     value,
     stream,
@@ -34,17 +40,37 @@ function serializeInto({
 }): TagType | undefined {
     if (typeof value === "object" && value) {
         if (serializeName) {
-            const name = Reflect.get(value, NBTNameSymbol);
-            if (name) {
-                stream.setUTF8(name);
+            const type = serializeObjectAsTagType(
+                tagTypeHint || Reflect.get(value as object, NBTTypeSymbol),
+                value,
+                stream,
+                true
+            );
+            if (type) {
+                if (returnTagType) {
+                    return type;
+                } else if (returnTagType === undefined) {
+                    stream.setByte(type);
+                }
+                const name = Reflect.get(value, NBTNameSymbol);
+                if (name) {
+                    stream.setUTF8(name);
+                }
+                serializeObjectAsTagType(
+                    tagTypeHint || Reflect.get(value as object, NBTTypeSymbol),
+                    value,
+                    stream,
+                    false
+                );
             }
+        } else {
+            return serializeObjectAsTagType(
+                tagTypeHint || Reflect.get(value as object, NBTTypeSymbol),
+                value,
+                stream,
+                returnTagType
+            );
         }
-        return serializeObjectAsTagType(
-            tagTypeHint || Reflect.get(value as object, NBTTypeSymbol),
-            value,
-            stream,
-            returnTagType
-        );
     } else {
         switch (typeof value) {
             case "boolean":

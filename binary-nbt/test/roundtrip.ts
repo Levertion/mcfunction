@@ -3,15 +3,21 @@ import { equal, strictEqual, deepStrictEqual } from "assert";
 import {
     serializeNBT,
     deserializeCompressedNBT,
-    decompressIfNeeded
+    decompressIfNeeded,
+    deserializeNBT,
+    serializeNBTDebug
 } from "../src";
 
 describe("roundtrip tests", () => {
     it("should roundtrip", async () => {
         await runTests(async (name, buffer) => {
+            const uncompressed = await decompressIfNeeded(buffer);
             deepStrictEqual(
-                serializeNBT(await deserializeCompressedNBT(buffer)),
-                await decompressIfNeeded(buffer),
+                serializeNBTDebug(
+                    deserializeNBT(uncompressed, true),
+                    uncompressed
+                ),
+                uncompressed,
                 `Roundtrip failed for ${name}`
             );
         });
