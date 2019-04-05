@@ -3,7 +3,7 @@ import * as zlib from "zlib";
 import * as Long from "long";
 
 import { BufferStream } from "./buffer-stream";
-import { TagType, NBTTypeSymbol, NBTNameSymbol } from "./tags";
+import { TagType, NBTNameSymbol, NBTListSymbol, createNBTType } from "./tags";
 
 const unzipAsync = promisify<zlib.InputType, Buffer>(zlib.unzip);
 
@@ -14,18 +14,20 @@ const unzipAsync = promisify<zlib.InputType, Buffer>(zlib.unzip);
  * The resulting object can be serialized into the same NBT value. This is explained fully in the README.
  *
  * @param buffer The buffer to deserialize the NBT from
+ * @param useMaps to use ES6 maps for compounds. This is useful to retain insertion order
  * @param named Whether or not the root is named. For example, a typical structure is {"":<data>}. (Reasoning for this required)
  *
  * @throws If the NBT is malformed. E.g. an invalid tag type is specified or the NBT is truncated.
  */
 export function deserializeNBT<T = unknown>(
     buffer: Buffer,
+    useMaps: boolean = false,
     named: boolean = true
 ): T {
     const stream = new BufferStream(buffer);
     const id = stream.getByte();
     const name: string | undefined = named ? stream.getUTF8() : undefined;
-    const result = deserializeTag(id, stream);
+    const result = deserializeTag(id, stream, useMaps);
     if (name) {
         Object.assign(result, { [NBTNameSymbol]: name });
     }
@@ -38,6 +40,7 @@ export function deserializeNBT<T = unknown>(
  * Same as `deserializeNBT`, but if `buffer` contains compressed data, it will be uncompressed automatically. If this behaviour is not required, use the synchronous `deserializeNBT` function instead.
  *
  * @param buffer The buffer to deserialize the NBT from.
+ * @param useMaps to use ES6 maps for compounds. This is useful to retain insertion order
  * @param named Whether or not the root is named. For example, a typical structure is {"":<data>}.
  *
  * @throws If the NBT is malformed. E.g. an invalid tag type is specified or the NBT is truncated.
@@ -45,6 +48,7 @@ export function deserializeNBT<T = unknown>(
  */
 export async function deserializeCompressedNBT<T = unknown>(
     buffer: Buffer,
+    useMaps: boolean = false,
     named: boolean = true
 ): Promise<T> {
     let unzipbuf;
@@ -53,19 +57,14 @@ export async function deserializeCompressedNBT<T = unknown>(
     } catch (e) {
         unzipbuf = buffer;
     }
-    return deserializeNBT<T>(unzipbuf, named);
+    return deserializeNBT<T>(unzipbuf, useMaps, named);
 }
 
-/**
- * Create a value which is to be serialized as a specific type.
- *
- * @param type The `TagType` which is to be serialized
- */
-export function createNBTType<T>(value: T, type: TagType): T {
-    return Object.assign(value, { [NBTTypeSymbol]: type });
-}
-
-function deserializeTag(type: TagType, buffer: BufferStream): any {
+function deserializeTag(
+    type: TagType,
+    buffer: BufferStream,
+    useMaps: boolean
+): any {
     switch (type) {
         case TagType.TAG_BYTE:
             return createNBTType(
@@ -97,8 +96,11 @@ function deserializeTag(type: TagType, buffer: BufferStream): any {
                 [],
                 TagType.TAG_BYTE_ARRAY
             );
+
             for (let _i = 0; _i < byte_len; _i++) {
-                byte_result.push(deserializeTag(TagType.TAG_BYTE, buffer));
+                byte_result.push(
+                    deserializeTag(TagType.TAG_BYTE, buffer, useMaps)
+                );
             }
             return byte_result;
         case TagType.TAG_STRING:
@@ -107,22 +109,27 @@ function deserializeTag(type: TagType, buffer: BufferStream): any {
             const id = buffer.getByte();
             const list_len = buffer.getInt();
             const list_result: any[] = createNBTType([], TagType.TAG_LIST);
+            Object.assign(list_result, { [NBTListSymbol]: id });
             for (let _i = 0; _i < list_len; _i++) {
-                list_result.push(deserializeTag(id, buffer));
+                list_result.push(deserializeTag(id, buffer, useMaps));
             }
             return list_result;
         case TagType.TAG_COMPOUND:
             let kind: number = buffer.getByte();
-            const result: { [key: string]: any } = createNBTType(
-                {},
+            const result: Map<string, any> = createNBTType(
+                new Map(),
                 TagType.TAG_COMPOUND
             );
             while (kind !== 0) {
                 const name = buffer.getUTF8();
-                result[name] = deserializeTag(kind, buffer);
+                result.set(name, deserializeTag(kind, buffer, useMaps));
                 kind = buffer.getByte();
             }
-            return result;
+            if (useMaps) {
+                return result;
+            } else {
+                return strMapToObj(result);
+            }
         case TagType.TAG_INT_ARRAY:
             const int_len = buffer.getInt();
             const int_result: number[] = createNBTType(
@@ -130,7 +137,9 @@ function deserializeTag(type: TagType, buffer: BufferStream): any {
                 TagType.TAG_INT_ARRAY
             );
             for (let _i = 0; _i < int_len; _i++) {
-                int_result.push(deserializeTag(TagType.TAG_INT, buffer));
+                int_result.push(
+                    deserializeTag(TagType.TAG_INT, buffer, useMaps)
+                );
             }
             return int_result;
 
@@ -140,8 +149,11 @@ function deserializeTag(type: TagType, buffer: BufferStream): any {
                 [],
                 TagType.TAG_LONG_ARRAY
             );
+
             for (let _i = 0; _i < long_len; _i++) {
-                long_result.push(deserializeTag(TagType.TAG_LONG, buffer));
+                long_result.push(
+                    deserializeTag(TagType.TAG_LONG, buffer, useMaps)
+                );
             }
             return long_result;
         default:
@@ -149,4 +161,12 @@ function deserializeTag(type: TagType, buffer: BufferStream): any {
                 `Invalid tag type around index ${buffer.index}: ${type}`
             );
     }
+}
+
+function strMapToObj<T>(strMap: Map<string, T>): Record<string, T> {
+    let obj = Object.create(null);
+    for (let [k, v] of strMap) {
+        obj[k] = v;
+    }
+    return obj;
 }
