@@ -1,7 +1,9 @@
-import { BufferStream } from "./buffer-stream";
-import { NBTTypeSymbol, TagType, NBTListSymbol, NBTNameSymbol } from "./tags";
-import * as Long from "long";
 import { ok } from "assert";
+import * as Long from "long";
+import { BufferStream } from "./buffer-stream";
+import { NBTListSymbol, NBTNameSymbol, NBTTypeSymbol, TagType } from "./tags";
+
+// tslint:disable: ban-types We need to be careful with `Number` vs `number`
 
 /**
  * Serialize from a JavaScript value into an equivalent NBT value.
@@ -168,16 +170,20 @@ function serializeObjectAsTagType(
     } else if (value instanceof Number || value instanceof Long) {
         return serializeNumber(type, value, stream, returnTagType);
     } else {
-        if (returnTagType) return TagType.TAG_COMPOUND;
-        if (returnTagType === undefined) stream.setByte(TagType.TAG_COMPOUND);
+        if (returnTagType) {
+            return TagType.TAG_COMPOUND;
+        }
+        if (returnTagType === undefined) {
+            stream.setByte(TagType.TAG_COMPOUND);
+        }
         const entries =
             value instanceof Map ? [...value] : Object.entries(value);
 
         for (const [name, val] of entries) {
             const tagType = serializeInto({
-                value: val,
+                returnTagType: true,
                 stream,
-                returnTagType: true
+                value: val
             });
             if (tagType) {
                 stream.setByte(tagType);
@@ -262,9 +268,9 @@ function serializeArray(
             if (!itemType) {
                 if (value.length > 0) {
                     const arrayType = serializeInto({
-                        value: value[0],
+                        returnTagType: true,
                         stream,
-                        returnTagType: true
+                        value: value[0]
                     });
                     if (arrayType) {
                         itemType = arrayType;
@@ -283,21 +289,30 @@ function serializeArray(
             }
             break;
         case TagType.TAG_BYTE_ARRAY:
-            if (returnTagType) return TagType.TAG_BYTE_ARRAY;
-            if (returnTagType === undefined)
+            if (returnTagType) {
+                return TagType.TAG_BYTE_ARRAY;
+            }
+            if (returnTagType === undefined) {
                 stream.setByte(TagType.TAG_BYTE_ARRAY);
+            }
             serializeArrayContents(stream, TagType.TAG_BYTE, value);
             break;
         case TagType.TAG_INT_ARRAY:
-            if (returnTagType) return TagType.TAG_INT_ARRAY;
-            if (returnTagType === undefined)
+            if (returnTagType) {
+                return TagType.TAG_INT_ARRAY;
+            }
+            if (returnTagType === undefined) {
                 stream.setByte(TagType.TAG_INT_ARRAY);
+            }
             serializeArrayContents(stream, TagType.TAG_INT, value);
             break;
         case TagType.TAG_LONG_ARRAY:
-            if (returnTagType) return TagType.TAG_LONG_ARRAY;
-            if (returnTagType === undefined)
+            if (returnTagType) {
+                return TagType.TAG_LONG_ARRAY;
+            }
+            if (returnTagType === undefined) {
                 stream.setByte(TagType.TAG_LONG_ARRAY);
+            }
             serializeArrayContents(stream, TagType.TAG_LONG, value);
             break;
         default:
@@ -316,10 +331,10 @@ function serializeArrayContents(
     stream.setInt(value.length);
     for (const item of value) {
         const thisItemType = serializeInto({
-            stream,
-            value: item,
             returnTagType: true,
-            tagTypeHint: itemType
+            stream,
+            tagTypeHint: itemType,
+            value: item
         });
         if (thisItemType !== itemType) {
             throw new TypeError(
@@ -329,10 +344,10 @@ function serializeArrayContents(
             );
         }
         serializeInto({
-            stream,
-            value: item,
             returnTagType: false,
-            tagTypeHint: itemType
+            stream,
+            tagTypeHint: itemType,
+            value: item
         });
     }
 }

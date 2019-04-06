@@ -1,5 +1,5 @@
-import { readFileSync, readdir } from "fs";
-import { extname, join, basename } from "path";
+import { readdir, readFileSync } from "fs";
+import { basename, extname, join } from "path";
 import { promisify } from "util";
 
 export async function runTests(

@@ -1,12 +1,6 @@
+import { deepStrictEqual } from "assert";
+import { decompressIfNeeded, deserializeNBT, serializeNBTDebug } from "../src";
 import { runTests } from "./data/data";
-import { equal, strictEqual, deepStrictEqual } from "assert";
-import {
-    serializeNBT,
-    deserializeCompressedNBT,
-    decompressIfNeeded,
-    deserializeNBT,
-    serializeNBTDebug
-} from "../src";
 
 describe("roundtrip tests", () => {
     it("should roundtrip", async () => {

@@ -1,9 +1,9 @@
+import * as Long from "long";
 import { promisify } from "util";
 import * as zlib from "zlib";
-import * as Long from "long";
 
 import { BufferStream } from "./buffer-stream";
-import { TagType, NBTNameSymbol, NBTListSymbol, createNBTType } from "./tags";
+import { createNBTType, NBTListSymbol, NBTNameSymbol, TagType } from "./tags";
 
 const unzipAsync = promisify<zlib.InputType, Buffer>(zlib.unzip);
 
@@ -36,8 +36,6 @@ export function deserializeNBT<T = unknown>(
     const result = deserializeTag(id, stream, useMaps);
     if (name) {
         Object.assign(result, { [NBTNameSymbol]: name });
-    }
-    if (stream) {
     }
     return result as T;
 }
@@ -80,53 +78,44 @@ function deserializeTag(
 ): any {
     switch (type) {
         case TagType.TAG_BYTE:
-            return createNBTType(
-                new Number(buffer.getByte()),
-                TagType.TAG_BYTE
-            );
+            return createNBTType(Number(buffer.getByte()), TagType.TAG_BYTE);
         case TagType.TAG_SHORT:
-            return createNBTType(
-                new Number(buffer.getShort()),
-                TagType.TAG_SHORT
-            );
+            return createNBTType(Number(buffer.getShort()), TagType.TAG_SHORT);
         case TagType.TAG_INT:
-            return createNBTType(new Number(buffer.getInt()), TagType.TAG_INT);
+            return createNBTType(Number(buffer.getInt()), TagType.TAG_INT);
         case TagType.TAG_LONG:
             return createNBTType(buffer.getLong(), TagType.TAG_LONG);
         case TagType.TAG_FLOAT:
-            return createNBTType(
-                new Number(buffer.getFloat()),
-                TagType.TAG_FLOAT
-            );
+            return createNBTType(Number(buffer.getFloat()), TagType.TAG_FLOAT);
         case TagType.TAG_DOUBLE:
             return createNBTType(
-                new Number(buffer.getDouble()),
+                Number(buffer.getDouble()),
                 TagType.TAG_DOUBLE
             );
         case TagType.TAG_BYTE_ARRAY:
-            const byte_len = buffer.getInt();
-            const byte_result: number[] = createNBTType(
+            const byteLen = buffer.getInt();
+            const byteResult: number[] = createNBTType(
                 [],
                 TagType.TAG_BYTE_ARRAY
             );
 
-            for (let _i = 0; _i < byte_len; _i++) {
-                byte_result.push(
+            for (let _i = 0; _i < byteLen; _i++) {
+                byteResult.push(
                     deserializeTag(TagType.TAG_BYTE, buffer, useMaps)
                 );
             }
-            return byte_result;
+            return byteResult;
         case TagType.TAG_STRING:
             return createNBTType(buffer.getUTF8(), TagType.TAG_STRING);
         case TagType.TAG_LIST:
             const id = buffer.getByte();
-            const list_len = buffer.getInt();
-            const list_result: any[] = createNBTType([], TagType.TAG_LIST);
-            Object.assign(list_result, { [NBTListSymbol]: id });
-            for (let _i = 0; _i < list_len; _i++) {
-                list_result.push(deserializeTag(id, buffer, useMaps));
+            const listLen = buffer.getInt();
+            const listResult: any[] = createNBTType([], TagType.TAG_LIST);
+            Object.assign(listResult, { [NBTListSymbol]: id });
+            for (let _i = 0; _i < listLen; _i++) {
+                listResult.push(deserializeTag(id, buffer, useMaps));
             }
-            return list_result;
+            return listResult;
         case TagType.TAG_COMPOUND:
             let kind: number = buffer.getByte();
             const result: Map<string, any> = createNBTType(
@@ -144,31 +133,31 @@ function deserializeTag(
                 return strMapToObj(result);
             }
         case TagType.TAG_INT_ARRAY:
-            const int_len = buffer.getInt();
-            const int_result: number[] = createNBTType(
+            const intLen = buffer.getInt();
+            const intResult: number[] = createNBTType(
                 [],
                 TagType.TAG_INT_ARRAY
             );
-            for (let _i = 0; _i < int_len; _i++) {
-                int_result.push(
+            for (let _i = 0; _i < intLen; _i++) {
+                intResult.push(
                     deserializeTag(TagType.TAG_INT, buffer, useMaps)
                 );
             }
-            return int_result;
+            return intResult;
 
         case TagType.TAG_LONG_ARRAY:
-            const long_len = buffer.getInt();
-            const long_result: Long[] = createNBTType(
+            const longLen = buffer.getInt();
+            const longResult: Long[] = createNBTType(
                 [],
                 TagType.TAG_LONG_ARRAY
             );
 
-            for (let _i = 0; _i < long_len; _i++) {
-                long_result.push(
+            for (let _i = 0; _i < longLen; _i++) {
+                longResult.push(
                     deserializeTag(TagType.TAG_LONG, buffer, useMaps)
                 );
             }
-            return long_result;
+            return longResult;
         default:
             throw new RangeError(
                 `Invalid tag type around index ${buffer.index}: ${type}`
@@ -177,8 +166,8 @@ function deserializeTag(
 }
 
 function strMapToObj<T>(strMap: Map<string, T>): Record<string, T> {
-    let obj = Object.create(null);
-    for (let [k, v] of strMap) {
+    const obj = Object.create(null);
+    for (const [k, v] of strMap) {
         obj[k] = v;
     }
     return obj;

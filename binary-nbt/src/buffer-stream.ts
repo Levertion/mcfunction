@@ -1,17 +1,16 @@
-import * as Long from "long";
 import { equal, ok } from "assert";
+import * as Long from "long";
 
 /**
  * An internal helper class to help deserialize and serialize from and to a `Buffer`.
  */
 export class BufferStream {
-    private buf: Buffer;
-    private _index: number = 0;
-    private debug: boolean = false;
-
     public get index(): number {
         return this._index;
     }
+    private buf: Buffer;
+    private _index: number = 0;
+    private debug: boolean = false;
 
     public constructor(buffer: Buffer, debug: boolean = false) {
         this.buf = buffer;
@@ -61,12 +60,6 @@ export class BufferStream {
         return out;
     }
 
-    private expand_by(amount: number) {
-        // We write to `this.index` first, so this should be a strictly >
-        if (this.index + amount > this.buf.length) {
-            this.buf = Buffer.alloc(this.buf.length * 2, this.buf);
-        }
-    }
     public setByte(value: number): void {
         if (this.debug) {
             equal(this.getByte(), value);
@@ -148,5 +141,12 @@ export class BufferStream {
             equal(this.buf.length, this.index);
         }
         return this.buf.slice(0, this.index);
+    }
+
+    private expand_by(amount: number) {
+        // We write to `this.index` first, so this should be a strictly >
+        if (this.index + amount > this.buf.length) {
+            this.buf = Buffer.alloc(this.buf.length * 2, this.buf);
+        }
     }
 }

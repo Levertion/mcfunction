@@ -37,5 +37,6 @@ export enum TagType {
  * @param type The `TagType` which is to be serialized
  */
 export function createNBTType<T>(value: T, type: TagType): T {
+    // tslint:disable-next-line: prefer-object-spread `Object.assign` is used here for a reason - we need to be careful about constructors
     return Object.assign(value, { [NBTTypeSymbol]: type });
 }
