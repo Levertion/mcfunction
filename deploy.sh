@@ -9,7 +9,7 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
       git config user.email "travis@travis-ci.org"
       git config user.name "Travis CI"
       # Silence it to not expose the GH_TOKEN
-      git remote add origin https://Levertion:${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} > /dev/null 2>&1
+      git remote set-url origin https://Levertion:${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} > /dev/null 2>&1
       git push --quiet
     else
       echo "Not on latest $TRAVIS_BRANCH, not pushing"
