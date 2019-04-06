@@ -1,3 +1,4 @@
+// tslint:disable-next-line: no-implicit-dependencies We only use `Long` for types
 import * as Long from "long";
 
 //#region World NBT data
