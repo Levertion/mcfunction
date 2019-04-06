@@ -11,6 +11,7 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
       # Silence it to not expose the GH_TOKEN
       git remote set-url origin https://Levertion:${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} > /dev/null 2>&1
       git push --quiet
+      git checkout $TRAVIS_COMMIT
     else
       echo "Not on latest $TRAVIS_BRANCH, not pushing"
     fi

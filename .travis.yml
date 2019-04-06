@@ -26,6 +26,8 @@ jobs:
         - stage: release
           node_js: lts/*
           script: skip
+          git:
+              depth: false
           env:
               global:
                   - secure: "KEB7wTinstdghYiRsZjghXSfkLZcJJR+pU8bn78qBnD17oSZQ5h/li0CrCtH+yAB/T3ELjhz+uaWcea7fsMSK9b7dW/wIFN+H5IKTE8xueXiZZ6t4y2KTFon0XiXKHBkXLuhrCyqrKpRyNvCGb+1hbrvY1XgYIFD/YMmqh9Fot3a0Qmy7TrKCnZjurr2D+w7/ee2+fimYEd33tkPbj+YNwzKQoIaQubmwWelwRYVoZslCQovSQNbBngNEEz2c746TpFyjH0qJEzf9uxDMDIX/8Q6BZNjxM6gQIs8aQ2zmdVG0S5g5E2YQDy40dHyuwjVGsCbLOa3om9pIRJ5K54sUZFM4cOH1N+IrMvkwbRMei5cJ+gQWeaJ8ls0J85Uh+p3td85S2GWDCPyFHijN1h5OTNG8Jzd3DBPEyZ1y4/vGUnuk4SXonanbgWgAYVrOlcNeEFewGUimrSkop3d4WlZyU8ftOTFuCRvPLwjg8gk2p9tjrKb0/vnfL75aKciBahbTEZyr1JCsi3b2aXjxOb8BayMY1EDMgVKG8PoHoR4M+513MbcxG2cLGvzqqxuGlcVvfTC6AMzVbdk9VfjtOCEkHwpV1xKaQ1u/nzsEz70dQABTkyJbpSSpmaHn0WsGumOqfYCkuZtTWEluvNTWy2F1jXOUrj1zttEmG6xG8KIR80="
