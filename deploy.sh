@@ -3,7 +3,7 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
     echo "This commit would run the deploy step"
   else
     git checkout $TRAVIS_BRANCH
-    if [[ $TRAVIS_COMMIT == `git rev-parse HEAD`]] then
+    if [ $TRAVIS_COMMIT == `git rev-parse HEAD` ]; then
       git reset --hard $TRAVIS_COMMIT
       npx lerna publish --dist-tag next --yes
       git config user.email "travis@travis-ci.org"
