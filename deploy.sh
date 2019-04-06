@@ -16,7 +16,8 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
       git config user.name "Travis CI"
       # Silence it to not expose the GH_TOKEN
       git remote set-url origin "https://Levertion:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG" > /dev/null 2>&1
-      git push --quiet
+      git push --all --quiet
+      git push --tags --quiet
       echo "Checking out $TRAVIS_COMMIT"
       git checkout $TRAVIS_COMMIT --quiet
     else
