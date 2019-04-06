@@ -32,7 +32,7 @@ jobs:
                   branch: master
               skip_cleanup: true
               script:
-                  - npx lerna publish --dist-tag next --yes
+                  - sh deploy.sh
               env:
                   global:
                       - secure: "NcgyIhBbRgv0FDmZM79GvYm8qowYrLH1aRAiyMM219G4r7LpOsc1vfxINeA5+L5l+b+9YgbuoV5b25g0tNWGe+fEosy7IbStrkqMNUouCchVFACYUF43NToUox25dS+XuE/eR0rJ5KxtNXl28BJlFAObki+HhqRWw9SDsmbbpiJ9BJsdw2BvD7ZEEUtoY36PCaEYTXcfNzXUuuHbbIVUMOuBOHrOruGRVAKFKJx3ddIYqOhy+SOEQ1qaKcXGxzpmU2YBMk5IwFCR7p/bBcCMEuVRJcSj8IFgnX3i/ODm/pORS8mwLaStAM861326PtLQRrmnoEa4e5XsmmBaQXeKkpyNMUNzFu86eKFqpl69kx76xiqz/9M83OoQqSiXswOkxE1SLgEZ2HsBFzLM2q2j0VuGodpBtR5OeWdnElzevdG4k7m7Ap7OiMXepozq5oy0uD0OJB2LWxwq9PntLnJ5Im+6Tm39/KcZEmylmhyjXoM08kQqVWw4E82ha9yoQQ8FdMZiNasm/l2Xe3w+zUIJjZwO/7LrW5lWIZs6+smH7iDoMibdrhVH2fYk604Gsgo/zop5SwG9LsiDRQ29GhZbG/4faoH3pYhPbdmEWn7VLGBt4jLSqyabB9aHeImrjIcjriPdqsM3BdTKOBZOGhFczNWjUUFGRGir676tt+Xpo7I="
