@@ -20,3 +20,20 @@ script:
     - npm run lint
     - npm run format -- --list-different
     # - npm run publish
+
+jobs:
+    include:
+        # Define the release stage that runs semantic-release
+        - stage: release
+          node_js: lts/*
+          deploy:
+              provider: script
+              on:
+                  branch: staging
+              skip_cleanup: true
+              script:
+                  - npx lerna publish --dist-tag next --yes
+              env:
+                  global:
+                      secure: "NcgyIhBbRgv0FDmZM79GvYm8qowYrLH1aRAiyMM219G4r7LpOsc1vfxINeA5+L5l+b+9YgbuoV5b25g0tNWGe+fEosy7IbStrkqMNUouCchVFACYUF43NToUox25dS+XuE/eR0rJ5KxtNXl28BJlFAObki+HhqRWw9SDsmbbpiJ9BJsdw2BvD7ZEEUtoY36PCaEYTXcfNzXUuuHbbIVUMOuBOHrOruGRVAKFKJx3ddIYqOhy+SOEQ1qaKcXGxzpmU2YBMk5IwFCR7p/bBcCMEuVRJcSj8IFgnX3i/ODm/pORS8mwLaStAM861326PtLQRrmnoEa4e5XsmmBaQXeKkpyNMUNzFu86eKFqpl69kx76xiqz/9M83OoQqSiXswOkxE1SLgEZ2HsBFzLM2q2j0VuGodpBtR5OeWdnElzevdG4k7m7Ap7OiMXepozq5oy0uD0OJB2LWxwq9PntLnJ5Im+6Tm39/KcZEmylmhyjXoM08kQqVWw4E82ha9yoQQ8FdMZiNasm/l2Xe3w+zUIJjZwO/7LrW5lWIZs6+smH7iDoMibdrhVH2fYk604Gsgo/zop5SwG9LsiDRQ29GhZbG/4faoH3pYhPbdmEWn7VLGBt4jLSqyabB9aHeImrjIcjriPdqsM3BdTKOBZOGhFczNWjUUFGRGir676tt+Xpo7I="
+                      secure: "Qpnv/UzL6kgd9xPBFhrWReMSAw+9uW2GTz7ApWRMx/BPkvXfyGJrZZQCcXv++zf54AYGJu1JU175cpxjgdLwNtzRIN1PVnd4Hw3fmPkJ+M2z8PQ+BB9RqGONkO0S38CrD7QL+q4IISwS+a9yw3ATwQuge2DjVNuCTPNaZughnfyXmhTf7JC5+tTQgEsdis93n9/2B9R+QxFQjFDyMlt90MjeAYjMvwY5j/Ou5y0RRUHtgIT4VDuhW+jutiKiRE/ttLgm5KH55xhcRmPJZKjWcw4lNyBqAObmKTc0IRJKI32IdkVyValfTMca9Bfu2eAzseHVPzH2KAtlZdJX14RmczlXv/JoIuys5s2BZPDz0RuZQjD9FLDWOnTcULizD4EnkRPVGALTWtX06r3VUwTyAUxBl0X6skxzcDbxs/PbXhkKsRT0uynRaOlRMBrclyqKjuD4ri5/4ySlV+D/e9ENTXDKSo0wdn5e++9M94MqakNujkOkkL6RT4OcjN1Yhl/Sh0u8vFC/fY+UivcSVJSL+oAVRGuN2ZG3sLYIZXX+Kxb2teM2WUL7R5YbB44SNVj6CR1MYOQ/qSNBf9OO7c5H0nAiJ11CnBkhHRlMXzNBNIlqbkll4aZvcTmiPXk3cXZM/ouOD400E3NzBx1jRu2BHc6OjqAumjR3XfvCPRDhAm0="

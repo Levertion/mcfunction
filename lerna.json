@@ -5,6 +5,9 @@
     "command": {
         "publish": {
             "conventionalCommits": true
+        },
+        "version": {
+            "githubRelease": true
         }
     }
 }
