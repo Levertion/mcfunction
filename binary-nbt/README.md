@@ -121,3 +121,8 @@ packages and so are excluded. These are:
 -   [`@nbxx/nb-table`](https://www.npmjs.com/package/@nbxx/nb-table),
     [`nbtemplates`](https://www.npmjs.com/package/nbtemplates) and
     [`nbtc`](https://www.npmjs.com/package/nbtc): Unrelated to Minecraft NBT
+
+## Changelog
+
+The [changelog](./CHANGELOG.md) contains a list of all the changes between
+versions
