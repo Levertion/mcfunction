@@ -8,7 +8,7 @@ branches:
         - master
 sudo: false
 node_js:
-    # TODO: Determine if we want to support any lower node versions
+    - "8"
     - "10"
 before_install:
     - npm install -g npm@6

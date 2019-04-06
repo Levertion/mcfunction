@@ -39,9 +39,7 @@ package's testing strategy can be found in their respective `README.md`s
 
 We use [bors](https://bors.tech/) to manage merging pull requests.
 
-The packages are currently only tested using node 10, although this could be
-changed should a compelling use case arise. Open an issue if you are require
-this!
+The packages are tested using node 10 and 8.
 
 ### npm packages
 
