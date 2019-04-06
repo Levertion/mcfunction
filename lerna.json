@@ -7,8 +7,7 @@
             "conventionalCommits": true
         },
         "version": {
-            "githubRelease": true,
-            "push": false
+            "githubRelease": true
         }
     }
 }
