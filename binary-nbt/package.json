@@ -1,7 +1,7 @@
 {
     "name": "binary-nbt",
     "version": "0.0.0",
-    "description": "A serialiser/deserialiser for the Minecraft NBT format",
+    "description": "A serializer and deserializer for Minecraft's NBT archives with support for ergonomic roundtripping.",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "scripts": {
@@ -27,17 +27,17 @@
         "url": "https://github.com/Levertion/mcfunction/issues"
     },
     "devDependencies": {
-        "@types/node": "10.0.3",
         "@types/long": "4.0.0",
         "@types/mocha": "5.2.0",
-        "typescript": "3.4.1",
+        "@types/node": "10.0.3",
         "mocha": "6.0.2",
         "ts-mocha": "6.0.0",
-        "tslint": "5.14.0"
+        "tslint": "5.14.0",
+        "typescript": "3.4.1"
     },
     "dependencies": {
-        "tslib": "1.9.3",
-        "long": "4.0.0"
+        "long": "4.0.0",
+        "tslib": "1.9.3"
     },
     "homepage": "https://github.com/Levertion/mcfunction#readme",
     "files": [
