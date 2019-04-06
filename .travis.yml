@@ -26,14 +26,14 @@ jobs:
         - stage: release
           node_js: lts/*
           script: skip
+          env:
+              global:
+                  - secure: "KEB7wTinstdghYiRsZjghXSfkLZcJJR+pU8bn78qBnD17oSZQ5h/li0CrCtH+yAB/T3ELjhz+uaWcea7fsMSK9b7dW/wIFN+H5IKTE8xueXiZZ6t4y2KTFon0XiXKHBkXLuhrCyqrKpRyNvCGb+1hbrvY1XgYIFD/YMmqh9Fot3a0Qmy7TrKCnZjurr2D+w7/ee2+fimYEd33tkPbj+YNwzKQoIaQubmwWelwRYVoZslCQovSQNbBngNEEz2c746TpFyjH0qJEzf9uxDMDIX/8Q6BZNjxM6gQIs8aQ2zmdVG0S5g5E2YQDy40dHyuwjVGsCbLOa3om9pIRJ5K54sUZFM4cOH1N+IrMvkwbRMei5cJ+gQWeaJ8ls0J85Uh+p3td85S2GWDCPyFHijN1h5OTNG8Jzd3DBPEyZ1y4/vGUnuk4SXonanbgWgAYVrOlcNeEFewGUimrSkop3d4WlZyU8ftOTFuCRvPLwjg8gk2p9tjrKb0/vnfL75aKciBahbTEZyr1JCsi3b2aXjxOb8BayMY1EDMgVKG8PoHoR4M+513MbcxG2cLGvzqqxuGlcVvfTC6AMzVbdk9VfjtOCEkHwpV1xKaQ1u/nzsEz70dQABTkyJbpSSpmaHn0WsGumOqfYCkuZtTWEluvNTWy2F1jXOUrj1zttEmG6xG8KIR80="
+                  - secure: "ro93Jy+BbOmKYA5yyQYpZ1Iree8O9HuXLN19oK47XCuHXDcZkSLQDr17UT4sxHdyJC4vXz7y9jsnZdT5b8+uO2pqy34Dwjz1gecHpu/2t+s/IQxtqFIvdeVfbZ6LkjWoVhJKr6BA8Ju+tZAJSKmjTI16dZav9OPT75WvVu19rqE1iT1OSSJYabtEnoDkSLCBAhcYIKt0iPuuF2dQehGaVi2jzFwr43bPpmwUohioQgegtbgvH7/F5RzsOK44+mXr6wTzjySCUTDusye6+A5lznPQzTVG3xGILLj5J5R3S5LpgjcFbolOci1C7kuCZHEY/JaCKVmOZ5nhkxQPZa8a3fBwN9ch6Xc4LDct8SaKxNcHhx8pRmIlsgLEL8+X1EtNxtrQHlZWE17i4g4/bCLNFvQuvUUKm7OYd5RDJXQ9EQ2+G4NRypNCxN4qOVbeA+CgqX4qKCV7WDlhShte0Fa1ilKGOd9/l/hLRRY5BCPzgyYVgNUeVK3/EE06BMoU2a9zpcIq6A3JkAXkJBLkU3tl9NumHpRT7Zzu8BqkyL8EBs8yu49SUnHpma3jxFQCm6+wHzHvrR0mtCixMDpbK2hRrrhHlaLNGwWkW9qRD5wdmpMxjK1kTrkLhIlPRcjXux5h/S1/xc4crbcfj+laYWd7fvaUFyjN9mLkdIN5v3oPgdo="
           deploy:
               provider: script
               on:
                   branch: master
-              skip_cleanup: true
-              script:
-                  - bash deploy.sh
-              env:
-                  global:
-                      - secure: "NcgyIhBbRgv0FDmZM79GvYm8qowYrLH1aRAiyMM219G4r7LpOsc1vfxINeA5+L5l+b+9YgbuoV5b25g0tNWGe+fEosy7IbStrkqMNUouCchVFACYUF43NToUox25dS+XuE/eR0rJ5KxtNXl28BJlFAObki+HhqRWw9SDsmbbpiJ9BJsdw2BvD7ZEEUtoY36PCaEYTXcfNzXUuuHbbIVUMOuBOHrOruGRVAKFKJx3ddIYqOhy+SOEQ1qaKcXGxzpmU2YBMk5IwFCR7p/bBcCMEuVRJcSj8IFgnX3i/ODm/pORS8mwLaStAM861326PtLQRrmnoEa4e5XsmmBaQXeKkpyNMUNzFu86eKFqpl69kx76xiqz/9M83OoQqSiXswOkxE1SLgEZ2HsBFzLM2q2j0VuGodpBtR5OeWdnElzevdG4k7m7Ap7OiMXepozq5oy0uD0OJB2LWxwq9PntLnJ5Im+6Tm39/KcZEmylmhyjXoM08kQqVWw4E82ha9yoQQ8FdMZiNasm/l2Xe3w+zUIJjZwO/7LrW5lWIZs6+smH7iDoMibdrhVH2fYk604Gsgo/zop5SwG9LsiDRQ29GhZbG/4faoH3pYhPbdmEWn7VLGBt4jLSqyabB9aHeImrjIcjriPdqsM3BdTKOBZOGhFczNWjUUFGRGir676tt+Xpo7I="
-                      - secure: "Qpnv/UzL6kgd9xPBFhrWReMSAw+9uW2GTz7ApWRMx/BPkvXfyGJrZZQCcXv++zf54AYGJu1JU175cpxjgdLwNtzRIN1PVnd4Hw3fmPkJ+M2z8PQ+BB9RqGONkO0S38CrD7QL+q4IISwS+a9yw3ATwQuge2DjVNuCTPNaZughnfyXmhTf7JC5+tTQgEsdis93n9/2B9R+QxFQjFDyMlt90MjeAYjMvwY5j/Ou5y0RRUHtgIT4VDuhW+jutiKiRE/ttLgm5KH55xhcRmPJZKjWcw4lNyBqAObmKTc0IRJKI32IdkVyValfTMca9Bfu2eAzseHVPzH2KAtlZdJX14RmczlXv/JoIuys5s2BZPDz0RuZQjD9FLDWOnTcULizD4EnkRPVGALTWtX06r3VUwTyAUxBl0X6skxzcDbxs/PbXhkKsRT0uynRaOlRMBrclyqKjuD4ri5/4ySlV+D/e9ENTXDKSo0wdn5e++9M94MqakNujkOkkL6RT4OcjN1Yhl/Sh0u8vFC/fY+UivcSVJSL+oAVRGuN2ZG3sLYIZXX+Kxb2teM2WUL7R5YbB44SNVj6CR1MYOQ/qSNBf9OO7c5H0nAiJ11CnBkhHRlMXzNBNIlqbkll4aZvcTmiPXk3cXZM/ouOD400E3NzBx1jRu2BHc6OjqAumjR3XfvCPRDhAm0="
+                  skip_cleanup: true
+                  script:
+                      - bash deploy.sh
