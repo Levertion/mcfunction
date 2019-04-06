@@ -124,5 +124,6 @@ packages and so are excluded. These are:
 
 ## Changelog
 
-The [changelog](./CHANGELOG.md) contains a list of all the changes between
-versions
+The
+[changelog](https://github.com/Levertion/mcfunction/blob/master/binary-nbt/CHANGELOG.md)
+contains a list of all the changes between versions
