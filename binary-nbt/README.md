@@ -65,11 +65,11 @@ The primary advantages of this library are the use of `Promise`s, vanilla
 JavaScript classes (e.g. `Number`, `String`) which can be treated as primitives
 in most cases, and Typescript type definitions.
 
-A brief rundown of the differences of other packages are below, in the order
-they appear in when searching for
-[`nbt` on npm](https://www.npmjs.com/search?q=nbt). For example, if they don't
-support little endian nbt, no attention is brought to that fact as it is not a
-difference from this package.
+A brief rundown of the differences between other packages and this one are
+below. For example, if they don't support little endian NBT, no attention is
+brought to that fact as it is not a difference from this package. These packages
+are described in the order they appear in when searching for
+[`nbt` on npm](https://www.npmjs.com/search?q=nbt).
 
 ### [`nbt`](https://www.npmjs.com/package/nbt):
 

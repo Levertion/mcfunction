@@ -43,10 +43,9 @@ The packages are tested using node 10 and 8.
 
 ### npm packages
 
-The plan is to release these packages on npm, once they are slightly more
-mature. Ideally, they will be released automatically from the master branch
-under the `next` npm tag, with certain releases cherry-picked for more general
-release. This however requires some engineering work.
+The packages are automatically released on `npm` once the tests pass on the
+master branch, under the `next` tag. For versions of packages which are more
+stable, the tag is manually updated to `latest`.
 
 ### License
 
