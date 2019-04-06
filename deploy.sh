@@ -8,6 +8,7 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
       npx lerna publish --dist-tag next --yes
       git config user.email "travis@travis-ci.org"
       git config user.name "Travis CI"
+      env
       # Silence it to not expose the GH_TOKEN
       git remote set-url origin https://Levertion:${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} > /dev/null 2>&1
       git push --quiet
