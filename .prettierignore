@@ -1,1 +1,3 @@
 **/lib/**
+# Written by lerna publish into a non-prettier friendly format
+**/CHANGELOG.md
