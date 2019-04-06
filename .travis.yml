@@ -28,10 +28,6 @@ jobs:
           script: skip
           git:
               depth: false
-          env:
-              global:
-                  - secure: "KEB7wTinstdghYiRsZjghXSfkLZcJJR+pU8bn78qBnD17oSZQ5h/li0CrCtH+yAB/T3ELjhz+uaWcea7fsMSK9b7dW/wIFN+H5IKTE8xueXiZZ6t4y2KTFon0XiXKHBkXLuhrCyqrKpRyNvCGb+1hbrvY1XgYIFD/YMmqh9Fot3a0Qmy7TrKCnZjurr2D+w7/ee2+fimYEd33tkPbj+YNwzKQoIaQubmwWelwRYVoZslCQovSQNbBngNEEz2c746TpFyjH0qJEzf9uxDMDIX/8Q6BZNjxM6gQIs8aQ2zmdVG0S5g5E2YQDy40dHyuwjVGsCbLOa3om9pIRJ5K54sUZFM4cOH1N+IrMvkwbRMei5cJ+gQWeaJ8ls0J85Uh+p3td85S2GWDCPyFHijN1h5OTNG8Jzd3DBPEyZ1y4/vGUnuk4SXonanbgWgAYVrOlcNeEFewGUimrSkop3d4WlZyU8ftOTFuCRvPLwjg8gk2p9tjrKb0/vnfL75aKciBahbTEZyr1JCsi3b2aXjxOb8BayMY1EDMgVKG8PoHoR4M+513MbcxG2cLGvzqqxuGlcVvfTC6AMzVbdk9VfjtOCEkHwpV1xKaQ1u/nzsEz70dQABTkyJbpSSpmaHn0WsGumOqfYCkuZtTWEluvNTWy2F1jXOUrj1zttEmG6xG8KIR80="
-                  - secure: "ro93Jy+BbOmKYA5yyQYpZ1Iree8O9HuXLN19oK47XCuHXDcZkSLQDr17UT4sxHdyJC4vXz7y9jsnZdT5b8+uO2pqy34Dwjz1gecHpu/2t+s/IQxtqFIvdeVfbZ6LkjWoVhJKr6BA8Ju+tZAJSKmjTI16dZav9OPT75WvVu19rqE1iT1OSSJYabtEnoDkSLCBAhcYIKt0iPuuF2dQehGaVi2jzFwr43bPpmwUohioQgegtbgvH7/F5RzsOK44+mXr6wTzjySCUTDusye6+A5lznPQzTVG3xGILLj5J5R3S5LpgjcFbolOci1C7kuCZHEY/JaCKVmOZ5nhkxQPZa8a3fBwN9ch6Xc4LDct8SaKxNcHhx8pRmIlsgLEL8+X1EtNxtrQHlZWE17i4g4/bCLNFvQuvUUKm7OYd5RDJXQ9EQ2+G4NRypNCxN4qOVbeA+CgqX4qKCV7WDlhShte0Fa1ilKGOd9/l/hLRRY5BCPzgyYVgNUeVK3/EE06BMoU2a9zpcIq6A3JkAXkJBLkU3tl9NumHpRT7Zzu8BqkyL8EBs8yu49SUnHpma3jxFQCm6+wHzHvrR0mtCixMDpbK2hRrrhHlaLNGwWkW9qRD5wdmpMxjK1kTrkLhIlPRcjXux5h/S1/xc4crbcfj+laYWd7fvaUFyjN9mLkdIN5v3oPgdo="
           deploy:
               provider: script
               on:
