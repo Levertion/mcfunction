@@ -7,6 +7,9 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
     git checkout $TRAVIS_BRANCH
     if [ $TRAVIS_COMMIT == `git rev-parse HEAD` ]; then
       echo "Resetting to $TRAVIS_COMMIT"
+      echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+      git update-index --skip-worktree .npmrc
+
       git reset --hard $TRAVIS_COMMIT
       npx lerna publish --dist-tag next --yes
       git config user.email "travis@travis-ci.org"
