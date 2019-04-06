@@ -1,6 +1,6 @@
 {
     "name": "binary-nbt",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "A serializer and deserializer for Minecraft's NBT archives with support for ergonomic roundtripping.",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
