@@ -1,5 +1,10 @@
 {
     "packages": ["editors/*", "*"],
-    "version": "fixed",
-    "hoist": true
+    "version": "independent",
+    "hoist": true,
+    "command": {
+        "publish": {
+            "conventionalCommits": true
+        }
+    }
 }
