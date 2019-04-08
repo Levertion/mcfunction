@@ -15,7 +15,7 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
       git config user.name "Levertion (via CI)"
       # Silence it to not expose the GH_TOKEN
       git remote set-url origin "https://Levertion:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG" > /dev/null 2>&1
-      npx lerna publish --dist-tag next --yes
+      npx lerna publish from-git --dist-tag next --yes
       echo "Checking out $TRAVIS_COMMIT"
       git checkout $TRAVIS_COMMIT --quiet
     else
