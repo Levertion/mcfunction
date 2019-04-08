@@ -3,7 +3,23 @@ import { promisify } from "util";
 import * as zlib from "zlib";
 
 import { BufferStream } from "./buffer-stream";
-import { createNBTType, NBTListSymbol, NBTNameSymbol, TagType } from "./tags";
+import {
+    byte,
+    byteArray,
+    compound,
+    double,
+    float,
+    int,
+    intArray,
+    list,
+    long,
+    longArray,
+    NBTListSymbol,
+    NBTNameSymbol,
+    short,
+    string,
+    TagType
+} from "./tags";
 
 const unzipAsync = promisify<zlib.InputType, Buffer>(zlib.unzip);
 
@@ -78,27 +94,20 @@ function deserializeTag(
 ): any {
     switch (type) {
         case TagType.TAG_BYTE:
-            return createNBTType(Number(buffer.getByte()), TagType.TAG_BYTE);
+            return byte(Number(buffer.getByte()));
         case TagType.TAG_SHORT:
-            return createNBTType(Number(buffer.getShort()), TagType.TAG_SHORT);
+            return short(Number(buffer.getShort()));
         case TagType.TAG_INT:
-            return createNBTType(Number(buffer.getInt()), TagType.TAG_INT);
+            return int(Number(buffer.getInt()));
         case TagType.TAG_LONG:
-            return createNBTType(buffer.getLong(), TagType.TAG_LONG);
+            return long(buffer.getLong());
         case TagType.TAG_FLOAT:
-            return createNBTType(Number(buffer.getFloat()), TagType.TAG_FLOAT);
+            return float(Number(buffer.getFloat()));
         case TagType.TAG_DOUBLE:
-            return createNBTType(
-                Number(buffer.getDouble()),
-                TagType.TAG_DOUBLE
-            );
+            return double(Number(buffer.getDouble()));
         case TagType.TAG_BYTE_ARRAY:
             const byteLen = buffer.getInt();
-            const byteResult: number[] = createNBTType(
-                [],
-                TagType.TAG_BYTE_ARRAY
-            );
-
+            const byteResult: number[] = byteArray([]);
             for (let _i = 0; _i < byteLen; _i++) {
                 byteResult.push(
                     deserializeTag(TagType.TAG_BYTE, buffer, useMaps)
@@ -106,11 +115,11 @@ function deserializeTag(
             }
             return byteResult;
         case TagType.TAG_STRING:
-            return createNBTType(buffer.getUTF8(), TagType.TAG_STRING);
+            return string(buffer.getUTF8());
         case TagType.TAG_LIST:
             const id = buffer.getByte();
             const listLen = buffer.getInt();
-            const listResult: any[] = createNBTType([], TagType.TAG_LIST);
+            const listResult: any[] = list([]);
             Object.assign(listResult, { [NBTListSymbol]: id });
             for (let _i = 0; _i < listLen; _i++) {
                 listResult.push(deserializeTag(id, buffer, useMaps));
@@ -118,10 +127,7 @@ function deserializeTag(
             return listResult;
         case TagType.TAG_COMPOUND:
             let kind: number = buffer.getByte();
-            const result: Map<string, any> = createNBTType(
-                new Map(),
-                TagType.TAG_COMPOUND
-            );
+            const result: Map<string, any> = compound(new Map());
             while (kind !== 0) {
                 const name = buffer.getUTF8();
                 result.set(name, deserializeTag(kind, buffer, useMaps));
@@ -134,10 +140,7 @@ function deserializeTag(
             }
         case TagType.TAG_INT_ARRAY:
             const intLen = buffer.getInt();
-            const intResult: number[] = createNBTType(
-                [],
-                TagType.TAG_INT_ARRAY
-            );
+            const intResult: number[] = intArray([]);
             for (let _i = 0; _i < intLen; _i++) {
                 intResult.push(
                     deserializeTag(TagType.TAG_INT, buffer, useMaps)
@@ -147,10 +150,7 @@ function deserializeTag(
 
         case TagType.TAG_LONG_ARRAY:
             const longLen = buffer.getInt();
-            const longResult: Long[] = createNBTType(
-                [],
-                TagType.TAG_LONG_ARRAY
-            );
+            const longResult: Long[] = longArray([]);
 
             for (let _i = 0; _i < longLen; _i++) {
                 longResult.push(
