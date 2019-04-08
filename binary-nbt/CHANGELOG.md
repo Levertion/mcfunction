@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.1.5...binary-nbt@0.2.0) (2019-04-08)
+
+
+### Features
+
+* **nbt:** Test from-git ([d99ae6c](https://github.com/Levertion/mcfunction/commit/d99ae6c))
+
+
+
+
+
 ## [0.1.5](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.1.4...binary-nbt@0.1.5) (2019-04-06)
 
 
