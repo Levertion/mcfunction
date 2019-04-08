@@ -96,11 +96,21 @@ function serializeInto({
                 break;
             case "number":
                 // TODO: Possibly better default if value is integer
-                stream.setByte(TagType.TAG_DOUBLE);
+                if (returnTagType === true) {
+                    return TagType.TAG_DOUBLE;
+                }
+                if (returnTagType === undefined) {
+                    stream.setByte(TagType.TAG_DOUBLE);
+                }
                 stream.setDouble(value);
                 break;
             case "string":
-                stream.setByte(TagType.TAG_STRING);
+                if (returnTagType === true) {
+                    return TagType.TAG_STRING;
+                }
+                if (returnTagType === undefined) {
+                    stream.setByte(TagType.TAG_STRING);
+                }
                 stream.setUTF8(value);
                 break;
             default:
