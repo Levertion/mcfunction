@@ -21,6 +21,12 @@ export function serializeNBT(value: unknown) {
     return buffer.getData();
 }
 
+/**
+ * Serialize `value` into `defaultBuffer`, throwing an error if any different value is written.
+ *
+ * Only intended for use in testing and debugging of this library. Changing the signature of
+ * this function MAY occur in any non-patch release
+ */
 export function serializeNBTDebug(value: unknown, defaultBuffer?: Buffer) {
     const buffer = new BufferStream(defaultBuffer || Buffer.alloc(1024), true);
     serializeInto({ value, stream: buffer, serializeName: true });
@@ -90,11 +96,21 @@ function serializeInto({
                 break;
             case "number":
                 // TODO: Possibly better default if value is integer
-                stream.setByte(TagType.TAG_DOUBLE);
+                if (returnTagType === true) {
+                    return TagType.TAG_DOUBLE;
+                }
+                if (returnTagType === undefined) {
+                    stream.setByte(TagType.TAG_DOUBLE);
+                }
                 stream.setDouble(value);
                 break;
             case "string":
-                stream.setByte(TagType.TAG_STRING);
+                if (returnTagType === true) {
+                    return TagType.TAG_STRING;
+                }
+                if (returnTagType === undefined) {
+                    stream.setByte(TagType.TAG_STRING);
+                }
                 stream.setUTF8(value);
                 break;
             default:
