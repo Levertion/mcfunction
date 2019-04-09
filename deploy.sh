@@ -21,7 +21,7 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
       (
         cd docs
         git checkout origin/gh-pages
-        git branch --orphan gh-pages-orphan
+        git checkout --orphan gh-pages-orphan
       )
       npx lerna publish --dist-tag next --yes 
       (
