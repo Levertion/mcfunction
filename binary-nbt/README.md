@@ -1,15 +1,15 @@
 # Binary NBT
 
 A serializer and deserializer for Minecraft's [NBT](https://wiki.vg/NBT)
-archives with support for ergonomic roundtripping.
+archives with a lossless but ergonomic output format.
 
-Roundtripping here means that a value can be deserialized from NBT and then
-serialized back into exactly the same NBT value. Ergonomic means that the
-deserialized value can be treated as a plain JavaScript object. E.g.
-`level.Data.allowCommands` works as expected for a `level.dat` file. Other
-libraries such as [`nbt`](https://www.npmjs.com/package/nbt) use custom objects,
-e.g. `{value: <...>, type: TAG_COMPOUND}`.This is possible through the use of
-ES6
+Lossless here means that a value can be deserialized from NBT and then
+serialized back into exactly the same NBT value (i.e. the types from the NBT can
+be recovered). Ergonomic means that the deserialized value can be treated as a
+plain JavaScript object. E.g. `level.Data.allowCommands` works as expected for a
+`level.dat` file. Other libraries such as
+[`nbt`](https://www.npmjs.com/package/nbt) use custom objects, e.g.
+`{value: <...>, type: TAG_COMPOUND}`.This is possible through the use of ES6
 [`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)s -
 every deserialized object has `NBTTypeSymbol` applied to it, which is used in
 serialisation (with sensible defaults for when this is not provided). This
@@ -31,9 +31,15 @@ not yet supported
 This package is part of the
 [`mcfunction-langserver`](https://github.com/Levertion/mcfunction) project.
 
-## Usage
+## API
 
-Example:
+### Deserialization
+
+Basic usage:
+
+```ts
+function deserializeNBTUncompressed(buffer: Buffer): any;
+```
 
 ```js
 const { deserializeNBTUncompressed } = require("binary-nbt");
@@ -52,10 +58,6 @@ const fs = require("fs");
 const contents = fs.readFileSync("level.dat");
 const level: Level = deserializeNBTUncompressed(contents);
 ```
-
-## Api
-
-The full api is documented in the included typescript declaration files.
 
 ## Comparison with alternatives
 
