@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.3.0...binary-nbt@0.4.0) (2019-04-09)
+
+
+### Features
+
+* **nbt:** Add automatically generated docs ([f9a60df](https://github.com/Levertion/mcfunction/commit/f9a60df))
+
+
+
+
+
 # [0.3.0](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.2.0...binary-nbt@0.3.0) (2019-04-08)
 
 
