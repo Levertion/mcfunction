@@ -3,6 +3,8 @@
 [ ![npm](https://img.shields.io/npm/v/binary-nbt.svg?style=flat-square) ![npm (tag)](https://img.shields.io/npm/v/binary-nbt/next.svg?style=flat-square) ![npm](https://img.shields.io/npm/dt/binary-nbt.svg?style=flat-square) ](http://npm.im/binary-nbt)
 [![docs](https://img.shields.io/badge/docs-TypeDoc-blueviolet.svg?style=flat-square)](levertion.github.io/mcfunction/binary-nbt)
 
+<!-- Testing -->
+
 A serializer and deserializer for Minecraft's [NBT](https://wiki.vg/NBT)
 archives with a lossless but ergonomic output format.
 
