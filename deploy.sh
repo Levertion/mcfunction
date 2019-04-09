@@ -18,12 +18,12 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
 
       # Setup pushing of docs
       git clone --no-checkout  "https://Levertion:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG" docs
-      git --git-dir=docs checkout origin/gh-pages
-      git --git-dir=docs branch --orphan gh-pages-orphan
+      git -C "docs" checkout origin/gh-pages
+      git -C "docs" branch --orphan gh-pages-orphan
       npx lerna publish --dist-tag next --yes 
-      git --git-dir=docs add .
-      git --git-dir=docs commit -m "Update docs"
-      git --git-dir=docs push --force origin gh-pages-orphan:gh-pages
+      git -C "docs" add .
+      git -C "docs" commit -m "Update docs"
+      git -C "docs" push --force origin gh-pages-orphan:gh-pages
       echo "Checking out $TRAVIS_COMMIT"
       git checkout $TRAVIS_COMMIT --quiet
     else
