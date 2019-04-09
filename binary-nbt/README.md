@@ -1,15 +1,18 @@
 # Binary NBT
 
-A serializer and deserializer for Minecraft's [NBT](https://wiki.vg/NBT)
-archives with support for ergonomic roundtripping.
+[ ![npm](https://img.shields.io/npm/v/binary-nbt.svg?style=flat-square) ![npm (tag)](https://img.shields.io/npm/v/binary-nbt/next.svg?style=flat-square) ![npm](https://img.shields.io/npm/dt/binary-nbt.svg?style=flat-square) ](http://npm.im/binary-nbt)
+[![docs](https://img.shields.io/badge/docs-TypeDoc-blueviolet.svg?style=flat-square)](levertion.github.io/mcfunction/binary-nbt)
 
-Roundtripping here means that a value can be deserialized from NBT and then
-serialized back into exactly the same NBT value. Ergonomic means that the
-deserialized value can be treated as a plain JavaScript object. E.g.
-`level.Data.allowCommands` works as expected for a `level.dat` file. Other
-libraries such as [`nbt`](https://www.npmjs.com/package/nbt) use custom objects,
-e.g. `{value: <...>, type: TAG_COMPOUND}`.This is possible through the use of
-ES6
+A serializer and deserializer for Minecraft's [NBT](https://wiki.vg/NBT)
+archives with a lossless but ergonomic output format.
+
+Lossless here means that a value can be deserialized from NBT and then
+serialized back into exactly the same NBT value (i.e. the types from the NBT can
+be recovered). Ergonomic means that the deserialized value can be treated as a
+plain JavaScript object. E.g. `level.Data.allowCommands` works as expected for a
+`level.dat` file. Other libraries such as
+[`nbt`](https://www.npmjs.com/package/nbt) use custom objects, e.g.
+`{value: <...>, type: TAG_COMPOUND}`.This is possible through the use of ES6
 [`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)s -
 every deserialized object has `NBTTypeSymbol` applied to it, which is used in
 serialisation (with sensible defaults for when this is not provided). This
@@ -31,9 +34,15 @@ not yet supported
 This package is part of the
 [`mcfunction-langserver`](https://github.com/Levertion/mcfunction) project.
 
-## Usage
+## API
 
-Example:
+### Deserialization
+
+Basic usage:
+
+```ts
+function deserializeNBTUncompressed(buffer: Buffer): any;
+```
 
 ```js
 const { deserializeNBTUncompressed } = require("binary-nbt");
@@ -53,17 +62,15 @@ const contents = fs.readFileSync("level.dat");
 const level: Level = deserializeNBTUncompressed(contents);
 ```
 
-## Api
-
-The full api is documented in the included typescript declaration files.
-
 ## Comparison with alternatives
 
 This library is yet another NBT library amongst the wide selection of existing
 JavaScript NBT libraries. A comparison with a selection of the others is below.
 The primary advantages of this library are the use of `Promise`s, vanilla
 JavaScript classes (e.g. `Number`, `String`) which can be treated as primitives
-in most cases, and Typescript type definitions.
+in most cases, and Typescript type definitions. We also have full
+[API documentation](https://levertion.github.io/mcfunction/binary-nbt) generated
+using [TypeDoc](https://typedoc.org/).
 
 A brief rundown of the differences between other packages and this one are
 below. For example, if they don't support little endian NBT, no attention is
@@ -90,13 +97,13 @@ are described in the order they appear in when searching for
 -   Supports little endian NBT;
 -   Uses same format as `nbt` for longs and other values;
 -   Has weak API documentation and no `Typescript` type definitions;
--   Doesn't use `Promise`s
+-   Doesn't use `Promise`s;
 
 ### [`nbt-ts`](https://www.npmjs.com/package/nbt-ts)
 
--   Uses `BigInt`s for longs, so only supports Node 10
--   Custom classes must be used for numbers, so the value must be accessed using
-    the `value` property
+-   Uses `BigInt`s for longs, so only supports Node 10;
+-   Custom classes are used for numbers, so the value must be accessed using the
+    `value` property;
 
 ### Excluded packages
 
