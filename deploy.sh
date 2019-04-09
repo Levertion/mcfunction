@@ -14,16 +14,16 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
       git config --global user.email "26185209+Levertion@users.noreply.github.com"
       git config --global user.name "Levertion (via CI)"
       # Silence it to not expose the GH_TOKEN
-      git remote set-url origin "https://Levertion:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG" &> /dev/null
+      git remote set-url origin "https://Levertion:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG"
 
       # Setup pushing of docs
-      git clone --no-checkout  "https://Levertion:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG" docs &> /dev/null
-      git --git-dir=docs checkout origin/gh-pages &> /dev/null
-      git --git-dir=docs branch --orphan gh-pages-orphan &> /dev/null
+      git clone --no-checkout  "https://Levertion:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG" docs
+      git --git-dir=docs checkout origin/gh-pages
+      git --git-dir=docs branch --orphan gh-pages-orphan
       npx lerna publish --dist-tag next --yes 
-      git --git-dir=docs add . &> /dev/null
-      git --git-dir=docs commit -m "Update docs" &> /dev/null
-      git --git-dir=docs push --force origin gh-pages-orphan:gh-pages &> /dev/null
+      git --git-dir=docs add .
+      git --git-dir=docs commit -m "Update docs"
+      git --git-dir=docs push --force origin gh-pages-orphan:gh-pages
       echo "Checking out $TRAVIS_COMMIT"
       git checkout $TRAVIS_COMMIT --quiet
     else
