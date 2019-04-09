@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.2.0...binary-nbt@0.3.0) (2019-04-08)
+
+
+### Bug Fixes
+
+* **nbt:** fix default doubles and strings ([1ea2d6f](https://github.com/Levertion/mcfunction/commit/1ea2d6f))
+
+
+### Features
+
+* **nbt:** add construction helpers for nbt values ([e3dc615](https://github.com/Levertion/mcfunction/commit/e3dc615))
+
+
+
+
+
 # [0.2.0](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.1.5...binary-nbt@0.2.0) (2019-04-08)
 
 
