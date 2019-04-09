@@ -1,5 +1,8 @@
 # Binary NBT
 
+[ ![npm](https://img.shields.io/npm/v/binary-nbt.svg?style=flat-square) ![npm (tag)](https://img.shields.io/npm/v/binary-nbt/next.svg?style=flat-square) ![npm](https://img.shields.io/npm/dt/binary-nbt.svg?style=flat-square) ](http://npm.im/binary-nbt)
+[![docs](https://img.shields.io/badge/docs-TypeDoc-blueviolet.svg?style=flat-square)](levertion.github.io/mcfunction/binary-nbt)
+
 A serializer and deserializer for Minecraft's [NBT](https://wiki.vg/NBT)
 archives with a lossless but ergonomic output format.
 
@@ -65,7 +68,9 @@ This library is yet another NBT library amongst the wide selection of existing
 JavaScript NBT libraries. A comparison with a selection of the others is below.
 The primary advantages of this library are the use of `Promise`s, vanilla
 JavaScript classes (e.g. `Number`, `String`) which can be treated as primitives
-in most cases, and Typescript type definitions.
+in most cases, and Typescript type definitions. We also have full
+[API documentation](https://levertion.github.io/mcfunction/binary-nbt) generated
+using [TypeDoc](https://typedoc.org/).
 
 A brief rundown of the differences between other packages and this one are
 below. For example, if they don't support little endian NBT, no attention is
@@ -92,13 +97,13 @@ are described in the order they appear in when searching for
 -   Supports little endian NBT;
 -   Uses same format as `nbt` for longs and other values;
 -   Has weak API documentation and no `Typescript` type definitions;
--   Doesn't use `Promise`s
+-   Doesn't use `Promise`s;
 
 ### [`nbt-ts`](https://www.npmjs.com/package/nbt-ts)
 
--   Uses `BigInt`s for longs, so only supports Node 10
--   Custom classes must be used for numbers, so the value must be accessed using
-    the `value` property
+-   Uses `BigInt`s for longs, so only supports Node 10;
+-   Custom classes are used for numbers, so the value must be accessed using the
+    `value` property;
 
 ### Excluded packages
 
