@@ -1,14 +1,16 @@
 {
     "name": "binary-nbt",
     "version": "0.2.0",
-    "description": "A serializer and deserializer for Minecraft's NBT archives with support for ergonomic roundtripping.",
+    "description": "A serializer and deserializer for Minecraft's NBT archives with a lossless but ergonomic output format",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "scripts": {
         "test": "mocha --opts ../mocha.opts",
         "compile": "tsc",
         "lint": "tslint -c ../tslint.json -p ./tsconfig.json",
-        "prepare": "npm run compile"
+        "prepare": "npm run compile",
+        "doc": "typedoc --out ../docs/binary-nbt  --excludeNotExported --mode file",
+        "postpublish": "npm run doc"
     },
     "repository": {
         "type": "git",
@@ -33,7 +35,8 @@
         "mocha": "6.0.2",
         "ts-mocha": "6.0.0",
         "tslint": "5.14.0",
-        "typescript": "3.4.1"
+        "typescript": "3.4.1",
+        "typedoc": "0.14.2"
     },
     "dependencies": {
         "long": "4.0.0",

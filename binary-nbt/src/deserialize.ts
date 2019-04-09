@@ -77,7 +77,7 @@ export async function deserializeCompressedNBT<T = unknown>(
 /**
  * Decompress a `Buffer` if required, returning the original Buffer otherwise
  *
- * Only exposed for tests
+ * @hidden Only exposed for tests
  */
 export async function decompressIfNeeded(buffer: Buffer): Promise<Buffer> {
     try {

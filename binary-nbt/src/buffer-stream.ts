@@ -3,6 +3,8 @@ import * as Long from "long";
 
 /**
  * An internal helper class to help deserialize and serialize from and to a `Buffer`.
+ *
+ * @hidden
  */
 export class BufferStream {
     public get index(): number {
