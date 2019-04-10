@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.4.2...binary-nbt@0.4.3) (2019-04-10)
+
+
+### Bug Fixes
+
+* **docs:** the broken link in the readme ([d5f1134](https://github.com/Levertion/mcfunction/commit/d5f1134))
+
+
+
+
+
 ## [0.4.2](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.4.1...binary-nbt@0.4.2) (2019-04-09)
 
 **Note:** Version bump only for package binary-nbt
