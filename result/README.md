@@ -1,7 +1,7 @@
 # Simple Result
 
 [ ![npm](https://img.shields.io/npm/v/simple-result.svg?style=flat-square) ![npm (tag)](https://img.shields.io/npm/v/simple-result/next.svg?style=flat-square) ![npm](https://img.shields.io/npm/dt/simple-result.svg?style=flat-square) ](http://npm.im/simple-result)
-[![docs](https://img.shields.io/badge/docs-TypeDoc-blueviolet.svg?style=flat-square)](levertion.github.io/mcfunction/result)
+[![docs](https://img.shields.io/badge/docs-TypeDoc-blueviolet.svg?style=flat-square)](http://levertion.github.io/mcfunction/result)
 
 Yet another `Result` type, inspired by Rust. This type allows you to encode a
 logical success or failure when it still may be useful to return a value.
