@@ -3,6 +3,7 @@
     "version": "0.4.3",
     "description": "A serializer and deserializer for Minecraft's NBT archives with a lossless but ergonomic output format",
     "main": "lib/index.js",
+    "bin": "lib/bin.js",
     "types": "lib/index.d.ts",
     "scripts": {
         "test": "mocha --opts ../mocha.opts",
@@ -28,6 +29,11 @@
     "bugs": {
         "url": "https://github.com/Levertion/mcfunction/issues"
     },
+    "dependencies": {
+        "long": "4.0.0",
+        "tslib": "1.9.3",
+        "cac": "6.4.3"
+    },
     "devDependencies": {
         "@types/long": "4.0.0",
         "@types/mocha": "5.2.0",
@@ -37,10 +43,6 @@
         "tslint": "5.14.0",
         "typedoc": "0.14.2",
         "typescript": "3.4.1"
-    },
-    "dependencies": {
-        "long": "4.0.0",
-        "tslib": "1.9.3"
     },
     "homepage": "https://github.com/Levertion/mcfunction#readme",
     "files": [
