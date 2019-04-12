@@ -8,6 +8,9 @@
 A serializer and deserializer for Minecraft's [NBT](https://wiki.vg/NBT)
 archives with a lossless but ergonomic output format.
 
+This also contains a command line tool to convert an NBT file to JSON, called
+`binary-nbt`
+
 Lossless here means that a value can be deserialized from NBT and then
 serialized back into exactly the same NBT value (i.e. the types from the NBT can
 be recovered). Ergonomic means that the deserialized value can be treated as a
@@ -62,6 +65,35 @@ const fs = require("fs");
 
 const contents = fs.readFileSync("level.dat");
 const level: Level = deserializeNBTUncompressed(contents);
+```
+
+### Command line
+
+The command line tool converts NBT values to JSON, whether compressed or not:
+
+```
+$ binary-nbt --help
+binary-nbt
+
+Usage:
+  $ binary-nbt [...files]
+
+Commands:
+  [...files]  Convert files from NBT into JSON, outputting them to stdout.
+If a directory is passed, it is recursively walked for files
+
+For more info, run any command with the `--help` flag:
+  $ binary-nbt --help
+
+Options:
+  -o, --out [dir]        Place the resulting files into this directory instead
+  -e, --extension [ext]  Extension to output the JSON files in (default: .json)
+  -h, --help             Display this message
+
+Examples:
+binary-nbt some_dir file.nbt file.nbt.gz --output .
+binary-nbt some_dir -o result
+
 ```
 
 ## Comparison with alternatives

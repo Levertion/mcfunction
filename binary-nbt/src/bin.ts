@@ -17,7 +17,7 @@ const cli = cac("binary-nbt");
 cli.command(
     "[...files]",
     `Convert files from NBT into JSON, outputting them to stdout. 
-If a directory is passed, it is recursively passed`
+If a directory is passed, it is recursively walked for files`
 )
     .option(
         "-o, --out [dir]",
@@ -76,7 +76,7 @@ async function runOn(
                         format(parsed)
                     )
                 );
-                await writeAsync(path, string);
+                await writeAsync(path, string, { flag: "wx" }); // Do not overwrite an existing file
             } else {
                 process.stdout.write(`${file}:\n${string}\n`);
             }
