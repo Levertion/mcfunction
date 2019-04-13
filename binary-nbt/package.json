@@ -1,6 +1,6 @@
 {
     "name": "binary-nbt",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "description": "A serializer and deserializer for Minecraft's NBT archives with a lossless but ergonomic output format",
     "main": "lib/index.js",
     "bin": "lib/bin.js",
@@ -32,14 +32,14 @@
     "dependencies": {
         "cac": "6.4.3",
         "long": "4.0.0",
-        "tslib": "1.9.3",
-        "mkdirp": "0.5.1"
+        "mkdirp": "0.5.1",
+        "tslib": "1.9.3"
     },
     "devDependencies": {
         "@types/long": "4.0.0",
+        "@types/mkdirp": "0.5.2",
         "@types/mocha": "5.2.0",
         "@types/node": "10.0.3",
-        "@types/mkdirp": "0.5.2",
         "mocha": "6.0.2",
         "ts-mocha": "6.0.0",
         "tslint": "5.14.0",
