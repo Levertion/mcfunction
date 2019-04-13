@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.4.3...binary-nbt@0.5.0) (2019-04-13)
+
+
+### Features
+
+* **nbt:** add a bin ([19c7132](https://github.com/Levertion/mcfunction/commit/19c7132))
+
+
+
+
+
 ## [0.4.3](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.4.2...binary-nbt@0.4.3) (2019-04-10)
 
 

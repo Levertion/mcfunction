@@ -1,6 +1,6 @@
 {
     "name": "binary-nbt",
-    "version": "0.4.3",
+    "version": "0.5.0",
     "description": "A serializer and deserializer for Minecraft's NBT archives with a lossless but ergonomic output format",
     "main": "lib/index.js",
     "bin": "lib/bin.js",
@@ -30,9 +30,9 @@
         "url": "https://github.com/Levertion/mcfunction/issues"
     },
     "dependencies": {
+        "cac": "6.4.3",
         "long": "4.0.0",
-        "tslib": "1.9.3",
-        "cac": "6.4.3"
+        "tslib": "1.9.3"
     },
     "devDependencies": {
         "@types/long": "4.0.0",
