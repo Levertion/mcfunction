@@ -2,8 +2,16 @@
 
 import * as cac from "cac";
 import { readdir, readFile, stat, writeFile } from "fs";
-import { format, FormatInputPathObject, join, parse, relative } from "path";
+import {
+    dirname,
+    format,
+    FormatInputPathObject,
+    join,
+    parse,
+    relative
+} from "path";
 
+import * as mkdirp from "mkdirp";
 import { promisify } from "util";
 import { deserializeCompressedNBT } from "./deserialize";
 
@@ -34,6 +42,7 @@ const readAsync = promisify(readFile);
 const writeAsync = promisify(writeFile);
 const statAsync = promisify(stat);
 const childrenAsync = promisify(readdir);
+const mkdirpAsync = promisify(mkdirp);
 
 async function run(files: string[], options: Options) {
     await Promise.all(
@@ -76,6 +85,7 @@ async function runOn(
                         format(parsed)
                     )
                 );
+                await mkdirpAsync(dirname(path));
                 await writeAsync(path, string, { flag: "wx" }); // Do not overwrite an existing file
             } else {
                 process.stdout.write(`${file}:\n${string}\n`);
