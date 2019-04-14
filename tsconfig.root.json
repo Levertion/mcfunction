@@ -16,7 +16,11 @@
         "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
         "declaration": true,
         /* Source Map Options */
-        "importHelpers": true
+        "importHelpers": true,
+        "paths": {
+            "binary-nbt": ["./binary-nbt/src/index.ts"],
+            "simple-result": ["./result/src/index.ts"]
+        }
     },
     "exclude": ["lintrules/**", "**/tests/*.ts"]
 }
