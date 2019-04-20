@@ -4,6 +4,7 @@
         "interface-name": false,
         "variable-name": {
             "options": ["allow-leading-underscore", "allow-pascal-case"]
-        }
+        },
+        "max-classes-per-file": false
     }
 }
