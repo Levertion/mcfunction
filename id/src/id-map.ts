@@ -8,14 +8,6 @@ export class IDMap<T> {
         innerMap.set(id.path, value);
     }
 
-    public *[Symbol.iterator](): IterableIterator<[ID, T]> {
-        for (const [namespace, map] of this.data) {
-            for (const [path, value] of map) {
-                yield [new ID(path, namespace), value];
-            }
-        }
-    }
-
     public get(id: ID): T | undefined {
         const innerMap = this.namespaceMap(id.namespace);
         return innerMap && innerMap.get(id.path);
@@ -36,6 +28,14 @@ export class IDMap<T> {
             return result;
         }
         return false;
+    }
+
+    public *[Symbol.iterator](): IterableIterator<[ID, T]> {
+        for (const [namespace, map] of this.data) {
+            for (const [path, value] of map) {
+                yield [new ID(path, namespace), value];
+            }
+        }
     }
 
     private namespaceMap(
