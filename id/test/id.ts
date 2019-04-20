@@ -1,4 +1,4 @@
-import { AssertionError, deepStrictEqual, strictEqual } from "assert";
+import { deepStrictEqual, strictEqual } from "assert";
 import { ID } from "../src";
 
 describe("ID", () => {
