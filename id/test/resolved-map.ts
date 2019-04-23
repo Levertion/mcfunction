@@ -1,5 +1,5 @@
-import { deepStrictEqual, strictEqual } from "assert";
-import { ID, IDSet, ResolvedIDMap } from "../src";
+import { deepStrictEqual, strictEqual, throws } from "assert";
+import { ID, isResolved, ResolvedIDMap } from "../src";
 
 describe("previousResolving", () => {
     it("should work with a simple resolver", () => {
@@ -69,5 +69,103 @@ describe("previousResolving", () => {
         });
         strictEqual(count, 4);
     });
-    // TODO: Test throwing an error with cycles
+    interface Tag {
+        refs: string[];
+        values: string[];
+    }
+
+    function setupRecursive(
+        resolver: ResolvedIDMap<Tag, string[]>["resolver"]
+    ): ResolvedIDMap<Tag, string[]> {
+        const map = new ResolvedIDMap(resolver);
+        map.set(new ID("unrelated1"), {
+            refs: [],
+            values: ["unrelated1value"]
+        });
+        map.set(new ID("unrelated2"), {
+            refs: [],
+            values: ["unrelated2value"]
+        });
+        map.set(new ID("first"), {
+            refs: ["second", "unrelated1"],
+            values: ["firstvalue"]
+        });
+        map.set(new ID("second"), {
+            refs: ["minecraft:first", "unrelated2"],
+            values: ["secondvalue"]
+        });
+        return map;
+    }
+    it("should throw an error for recursion using get", () => {
+        let count = 0;
+        const map = setupRecursive((value, _id, thisMap) => {
+            count++;
+            const values = [...value.values];
+            for (const path of value.refs) {
+                const id = ID.fromString(path);
+                const result = thisMap.get(id);
+                values.push(...result.resolved);
+            }
+            return values;
+        });
+        strictEqual(count, 0);
+        deepStrictEqual(map.get(new ID("unrelated1")), {
+            raw: {
+                refs: [],
+                values: ["unrelated1value"]
+            },
+            resolved: ["unrelated1value"]
+        });
+        strictEqual(count, 1);
+        throws(() => map.get(new ID("first")));
+        // "first", "second", <throws>
+        strictEqual(count, 3);
+    });
+    it("should not throw an error for recursion using getCycle", () => {
+        let count = 0;
+        const map = setupRecursive((value, _id, thisMap) => {
+            count++;
+            const values = [...value.values];
+            for (const path of value.refs) {
+                const id = ID.fromString(path);
+                const result = thisMap.getCycle(id);
+                if (isResolved(result)) {
+                    values.push(...result.resolved);
+                }
+            }
+            return values;
+        });
+        strictEqual(count, 0);
+        deepStrictEqual(map.get(new ID("unrelated1")), {
+            raw: {
+                refs: [],
+                values: ["unrelated1value"]
+            },
+            resolved: ["unrelated1value"]
+        });
+        strictEqual(count, 1);
+        deepStrictEqual(map.get(new ID("unrelated1")), {
+            raw: {
+                refs: [],
+                values: ["unrelated1value"]
+            },
+            resolved: ["unrelated1value"]
+        });
+        deepStrictEqual(map.get(new ID("first")), {
+            raw: {
+                refs: ["second", "unrelated1"],
+                values: ["firstvalue"]
+            },
+            resolved: [
+                "firstvalue",
+                "secondvalue",
+                "unrelated2value",
+                "unrelated1value"
+            ]
+        });
+        // "unrelated1 (from above)", "first", "second", "unrelated2", "unrelated1"
+        strictEqual(count, 4);
+        map.get(new ID("first"));
+        strictEqual(count, 4);
+    });
 });

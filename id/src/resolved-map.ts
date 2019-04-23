@@ -17,7 +17,7 @@ function hasValue(value: any): value is HasValue<any> {
 function hasDeps(value: any): value is HasDeps {
     return value.hasOwnProperty("deps");
 }
-function isResolved(value: any): value is IsResolved<any> {
+export function isResolved(value: any): value is IsResolved<any> {
     return value.hasOwnProperty("resolved");
 }
 
