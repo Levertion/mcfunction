@@ -1,23 +1,68 @@
 import { ID } from "./id";
 
-export class IDMap<T> {
-    private data: Map<string, Map<string, T>> = new Map();
+/**
+ * A mapping from `ID` to `T`.
+ *
+ * Internally, this is stored as a `Map<(namespace) string, Map<(path)string, T>>`
+ */
+export class IDMap<T>
+// implements Map<ID, T>
+{
+    private data: Map<
+        /* namespace */ string,
+        Map</* path */ string, T>
+    > = new Map();
 
-    public set(id: ID, value: T) {
-        const innerMap = this.namespaceMapOrDefault(id.namespace);
-        innerMap.set(id.path, value);
+    /**
+     * Remove all data from this `IDMap`.
+     */
+    public clear(): void {
+        this.data.clear();
     }
 
+    /**
+     * Get the total number of `ID=>T` mappings in this map.
+     */
+    public get size(): number {
+        let size = 0;
+        this.data.forEach(v => (size += v.size));
+        return size;
+    }
+
+    /**
+     * Add a mapping from `id=>value`.
+     *
+     * This will use the default namespace if not specified,
+     * i.e `IDMap::set(new ID("stone"), ...)` and `IDMap::set(new ID("minecraft:stone"), ...)`
+     * are equivalent and indistinguishable.
+     */
+    public set(id: ID, value: T): this {
+        const innerMap = this.namespaceMapOrDefault(id.namespace);
+        innerMap.set(id.path, value);
+        return this;
+    }
+
+    /**
+     * Get the value of `id` from the map, if it exists.
+     */
     public get(id: ID): T | undefined {
         const innerMap = this.namespaceMap(id.namespace);
         return innerMap && innerMap.get(id.path);
     }
 
+    /**
+     * Test if the map has a value for `id`.
+     */
     public has(id: ID): boolean {
         const innerMap = this.namespaceMap(id.namespace);
         return !!(innerMap && innerMap.has(id.path));
     }
 
+    /**
+     * Remove `id` from this map
+     *
+     * @returns whether `id` was in the map
+     */
     public delete(id: ID): boolean {
         const innerMap = this.namespaceMap(id.namespace);
         if (innerMap) {
@@ -30,6 +75,9 @@ export class IDMap<T> {
         return false;
     }
 
+    /**
+     * Iterate through the `[ID, T]` pairs of this map
+     */
     public *[Symbol.iterator](): IterableIterator<[ID, T]> {
         for (const [namespace, map] of this.data) {
             for (const [path, value] of map) {
@@ -54,11 +102,5 @@ export class IDMap<T> {
         const newMap = new Map();
         this.data.set(namespace, newMap);
         return newMap;
-    }
-}
-
-export class IDSet extends IDMap<undefined> {
-    public add(id: ID) {
-        this.set(id, undefined);
     }
 }

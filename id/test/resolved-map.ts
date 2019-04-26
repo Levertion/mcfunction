@@ -1,5 +1,5 @@
 import { deepStrictEqual, strictEqual, throws } from "assert";
-import { ID, isResolved, ResolvedIDMap } from "../src";
+import { ID, ResolvedIDMap } from "../src";
 
 describe("previousResolving", () => {
     it("should work with a simple resolver", () => {
@@ -102,7 +102,7 @@ describe("previousResolving", () => {
             count++;
             const values = [...value.values];
             for (const path of value.refs) {
-                const id = ID.fromString(path);
+                const id = new ID(path);
                 const result = thisMap.get(id);
                 values.push(...result.resolved);
             }
@@ -127,9 +127,9 @@ describe("previousResolving", () => {
             count++;
             const values = [...value.values];
             for (const path of value.refs) {
-                const id = ID.fromString(path);
+                const id = new ID(path);
                 const result = thisMap.getCycle(id);
-                if (isResolved(result)) {
+                if (ResolvedIDMap.isResolved(result)) {
                     values.push(...result.resolved);
                 }
             }

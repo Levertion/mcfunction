@@ -22,9 +22,12 @@ describe("ID", () => {
             sep?: string
         ) {
             deepStrictEqual(
-                ID.fromString(toParse, sep),
+                ID.parseString(toParse, sep),
                 new ID(path, namespace)
             );
+            if (sep === undefined) {
+                deepStrictEqual(new ID(toParse), new ID(path, namespace));
+            }
         }
         testFromString("path", "path");
         testFromString("stone", "stone");
