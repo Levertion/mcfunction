@@ -1,0 +1,43 @@
+{
+    "name": "minecraft-id",
+    "version": "0.0.0",
+    "description": "Types for working with IDs from Minecraft, such as `minecraft:stone`",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "scripts": {
+        "test": "mocha --opts ../mocha.opts",
+        "compile": "tsc",
+        "lint": "tslint -c ../tslint.json -p ./tsconfig.json",
+        "prepare": "npm run compile",
+        "doc": "typedoc --out ../docs/id --excludeNotExported --mode file",
+        "postpublish": "npm run doc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Levertion/mcfunction.git"
+    },
+    "keywords": [
+        "Minecraft",
+        "ID"
+    ],
+    "author": "Levertion",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Levertion/mcfunction/issues"
+    },
+    "devDependencies": {
+        "@types/mocha": "5.2.0",
+        "mocha": "6.0.2",
+        "ts-mocha": "6.0.0",
+        "tslint": "5.14.0",
+        "typedoc": "0.14.2",
+        "typescript": "3.4.1"
+    },
+    "dependencies": {
+        "tslib": "1.9.3"
+    },
+    "homepage": "https://github.com/Levertion/mcfunction#readme",
+    "files": [
+        "lib/**"
+    ]
+}

@@ -12,6 +12,15 @@
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": ["--opts", "../mocha.opts", "-v"],
             "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "id Mocha Tests",
+            "cwd": "${workspaceFolder}/id/",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": ["--opts", "../mocha.opts", "-v"],
+            "internalConsoleOptions": "openOnSessionStart"
         }
     ]
 }
