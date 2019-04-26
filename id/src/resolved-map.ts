@@ -11,6 +11,13 @@ interface HasDeps {
 interface IsResolved<R> {
     resolved: R;
 }
+interface IsResolving {
+    resolving: true;
+}
+
+function isResolving(value: any): value is IsResolving {
+    return value.hasOwnProperty("resolving");
+}
 
 function hasValue(value: any): value is HasValue<any> {
     return value.hasOwnProperty("raw");
@@ -22,15 +29,18 @@ function isResolved(value: any): value is IsResolved<any> {
     return value.hasOwnProperty("resolved");
 }
 
-type InternalResolving<T> = HasDeps & HasValue<T>;
+// Is being resolved
+type InternalResolving<T> = HasDeps & HasValue<T> & IsResolving;
+// Has been resolved
 type InternalResolved<T, R> = IsResolved<R> & HasValue<T> & HasDeps;
+// Might be resolving
 type InternalMaybeResolving<T, R> =
     | InternalResolving<T>
     | InternalResolved<T, R>;
 
-type ResolvingOrDeps<T, R> = InternalMaybeResolving<T, R> | HasDeps;
+type ResolvingOrRequested<T, R> = InternalMaybeResolving<T, R> | Requested;
 
-type Unresolved<T> = HasValue<T>;
+type Unresolved<T> = HasValue<T> & Partial<HasDeps>;
 type Requested = HasDeps;
 type Stored<T, R> =
     | InternalResolving<T>
@@ -59,9 +69,10 @@ export type MaybeResolving<T, R> = HasValue<T> | Resolved<T, R>;
  */
 export class ResolvedIDMap<T, R> {
     public static isResolved = isResolved;
-    private static removeDeps(value: any): any {
+    private static cleanUp(value: any): any {
         const copy = { ...value };
         delete copy.deps;
+        delete copy.resolving;
         return copy;
     }
     private inner: IDMap<Stored<T, R>> = new IDMap();
@@ -80,7 +91,12 @@ export class ResolvedIDMap<T, R> {
      */
     public set(id: ID, raw: T) {
         this.reset(id);
-        this.inner.set(id, { raw });
+        const value = this.inner.get(id);
+        if (value) {
+            this.inner.set(id, { ...value, raw });
+        } else {
+            this.inner.set(id, { raw });
+        }
     }
 
     /**
@@ -108,7 +124,7 @@ export class ResolvedIDMap<T, R> {
     public getCycle(id: ID): MaybeResolving<T, R> | undefined {
         const value = this.resolve(id);
         if (value && hasValue(value)) {
-            return ResolvedIDMap.removeDeps(value);
+            return ResolvedIDMap.cleanUp(value);
         }
         return undefined;
     }
@@ -133,7 +149,7 @@ export class ResolvedIDMap<T, R> {
         const result = this.getCycle(id);
         if (result) {
             if (isResolved(result)) {
-                return ResolvedIDMap.removeDeps(result);
+                return ResolvedIDMap.cleanUp(result);
             }
             throw new Error(
                 `Value for ${id} requested during its own resolution. To avoid this error being thrown, use \`getCycle\` instead`
@@ -158,36 +174,39 @@ export class ResolvedIDMap<T, R> {
      * This is useful for the error-reporting use case mentioned in the README.
      */
     public resolveDeps(id: ID): void {
-        this.forEachDep(id, (_, innerID) => {
-            this.resolve(innerID);
-        });
+        this.forEachDep(id, innerID => this.resolve(innerID));
     }
 
-    private forEachDep(id: ID, func: (stored: Stored<T, R>, id: ID) => void) {
+    private forEachDep(id: ID, func: (id: ID) => void) {
+        for (const innerID of this.collectDeps(id)) {
+            func(innerID);
+        }
+    }
+    private collectDeps(id: ID, collected: IDSet = new IDSet()): IDSet {
+        collected.add(id);
         const value = this.inner.get(id);
-        if (value) {
-            const deps = hasDeps(value) && value.deps;
-            func(value, id);
-            if (deps) {
-                for (const dep of deps) {
-                    this.forEachDep(dep, func);
+        if (value && hasDeps(value)) {
+            for (const dep of value.deps) {
+                if (!collected.has(dep)) {
+                    this.collectDeps(dep, collected);
                 }
             }
         }
+        return collected;
     }
 
     private reset(id: ID): void {
-        this.forEachDep(id, value => {
-            if (hasDeps(value)) {
-                delete value.deps;
-            }
-            if (isResolved(value)) {
-                delete value.resolved;
+        this.forEachDep(id, innerID => {
+            const value = this.inner.get(innerID);
+            if (value) {
+                if (isResolved(value)) {
+                    delete value.resolved;
+                }
             }
         });
     }
 
-    private resolve(id: ID): ResolvingOrDeps<T, R> | undefined {
+    private resolve(id: ID): ResolvingOrRequested<T, R> | undefined {
         const value = this.inner.get(id);
         const previousResolving = this.resolving;
         if (typeof value === "undefined") {
@@ -209,19 +228,25 @@ export class ResolvedIDMap<T, R> {
             // Resolved
             isResolved(value) ||
             // Resolving
-            hasDeps(value)
+            isResolving(value)
         ) {
             return value;
         }
         // Unresolved and no deps.
-        const asserted = value as InternalResolved<T, R>;
         this.resolving = id;
-        asserted.deps = new IDSet();
+        // Unfortunate assertions to change the type of the stored.
+        const deps = ((value as HasDeps).deps = new IDSet());
         if (previousResolving) {
-            asserted.deps.add(previousResolving);
+            deps.add(previousResolving);
         }
-        asserted.resolved = this.resolver(value.raw, id, this);
+        ((value as unknown) as IsResolving).resolving = true;
+        ((value as unknown) as IsResolved<R>).resolved = this.resolver(
+            value.raw,
+            id,
+            this
+        );
+        delete ((value as unknown) as IsResolving).resolving;
         this.resolving = previousResolving;
-        return asserted;
+        return value as InternalResolved<T, R>;
     }
 }

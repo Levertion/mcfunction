@@ -24,6 +24,9 @@ reporting. However, `ResolvedIDMap` may still be useful in these cases as it
 tracks dependents, so if an item is later modified only its dependents need to
 be re-resolved. `ResolvedIDMap::resolveDeps` should be called.
 
+This package is part of the
+[`mcfunction-langserver`](https://github.com/Levertion/mcfunction) project.
+
 ## Examples
 
 ```ts
