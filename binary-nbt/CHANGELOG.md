@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.5.1...binary-nbt@0.5.2) (2019-04-26)
+
+
+### Bug Fixes
+
+* modify tsconfigs to allow working cross-dependencies ([1fc99a5](https://github.com/Levertion/mcfunction/commit/1fc99a5))
+
+
+
+
+
 ## [0.5.1](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.5.0...binary-nbt@0.5.1) (2019-04-13)
 
 **Note:** Version bump only for package binary-nbt

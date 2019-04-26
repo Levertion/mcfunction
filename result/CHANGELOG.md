@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/Levertion/mcfunction/compare/simple-result@0.1.1...simple-result@0.1.2) (2019-04-26)
+
+
+### Bug Fixes
+
+* modify tsconfigs to allow working cross-dependencies ([1fc99a5](https://github.com/Levertion/mcfunction/commit/1fc99a5))
+
+
+
+
+
 ## [0.1.1](https://github.com/Levertion/mcfunction/compare/simple-result@0.1.0...simple-result@0.1.1) (2019-04-10)
 
 
