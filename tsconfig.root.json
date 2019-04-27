@@ -15,12 +15,10 @@
         "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
         "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
         "declaration": true,
-        /* Source Map Options */
         "importHelpers": true,
-        "paths": {
-            "binary-nbt": ["./binary-nbt/src/index.ts"],
-            "simple-result": ["./result/src/index.ts"]
-        }
+        /* Source Map Options */
+        "declarationMap": true,
+        "sourceMap": true
     },
     "exclude": ["lintrules/**", "**/tests/*.ts"]
 }

@@ -38,6 +38,6 @@
     },
     "homepage": "https://github.com/Levertion/mcfunction#readme",
     "files": [
-        "lib/**"
+        "lib/**.{d.ts, js}"
     ]
 }

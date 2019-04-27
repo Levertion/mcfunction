@@ -9,5 +9,8 @@
     },
     "editor.codeActionsOnSave": {
         "source.fixAll.tslint": true
+    },
+    "files.exclude": {
+        "**/*.map": true
     }
 }
