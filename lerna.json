@@ -9,5 +9,6 @@
         "version": {
             "githubRelease": true
         }
-    }
+    },
+    "ignoreChanges": ["**/test/**"]
 }
