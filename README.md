@@ -12,13 +12,14 @@ Tools for working with Minecraft commands. Current packages:
 <!-- - minecraft-command-parser: A parser for Minecraft commands. -->
 <!-- - mcfunction-server: A language server frontend to command-parser -->
 <!-- - mcfunction-verifier: A command line frontend to command-parser, which tests -->
-<!-- - editors/vscode: A vscode extension using mcfunction-langserver.
-    TODO: Determine if this should be in this repository -->
+<!-- - editors/vscode: A vscode extension using mcfunction-langserver -->
 <!-- mc-nbt-paths: TODO: Check if @MrYurihi will allow us to move this into this repository -->
 <!-- minecraft-json-schemas: JSON schemas for the JSON files used by minecraft -->
 
+-   minecraft-id: Types for working with IDs from Minecraft, such as
+    `minecraft:stone`
+-   simple-result: A simple, rust-inspired Result type
 -   binary-nbt: A serializer and deserializer for (binary) NBT data
--   minecraft-nbt-types: Typescript types for (some) Vanilla NBT files
 
 ### Development
 

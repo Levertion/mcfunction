@@ -167,7 +167,6 @@ describe("previousResolving", () => {
         strictEqual(count, 4);
         map.get(new ID("first"));
         strictEqual(count, 4);
-        // TODO: Test resolveDeps, probably here.
         map.set(new ID("unrelated1"), {
             refs: [],
             values: ["unrelated1new"]
