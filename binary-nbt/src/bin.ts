@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import * as cac from "cac";
-import { readdir, readFile, stat, writeFile } from "fs";
+import { mkdirp, readdir, readFile, stat, writeFile } from "fs-extra";
 import {
     dirname,
     format,
@@ -11,8 +11,6 @@ import {
     relative
 } from "path";
 
-import * as mkdirp from "mkdirp";
-import { promisify } from "util";
 import { deserializeCompressedNBT } from "./deserialize";
 
 interface Options {
@@ -38,12 +36,6 @@ If a directory is passed, it is recursively walked for files`
     .example("binary-nbt some_dir -o result")
     .action(run);
 
-const readAsync = promisify(readFile);
-const writeAsync = promisify(writeFile);
-const statAsync = promisify(stat);
-const childrenAsync = promisify(readdir);
-const mkdirpAsync = promisify(mkdirp);
-
 async function run(files: string[], options: Options) {
     await Promise.all(
         files.map(file => {
@@ -57,15 +49,15 @@ async function runOn(
     options: Options,
     files: string[]
 ): Promise<void> {
-    if ((await statAsync(file)).isDirectory()) {
+    if ((await stat(file)).isDirectory()) {
         await Promise.all(
-            (await childrenAsync(file)).map(child =>
+            (await readdir(file)).map(child =>
                 runOn(join(file, child), options, files)
             )
         );
     } else {
         try {
-            const contents = await readAsync(file);
+            const contents = await readFile(file);
             const value = await deserializeCompressedNBT(contents);
             const string = JSON.stringify(value);
             if (options.out) {
@@ -85,8 +77,8 @@ async function runOn(
                         format(parsed)
                     )
                 );
-                await mkdirpAsync(dirname(path));
-                await writeAsync(path, string, { flag: "wx" }); // Do not overwrite an existing file
+                await mkdirp(dirname(path));
+                await writeFile(path, string, { flag: "wx" }); // Do not overwrite an existing file
             } else {
                 process.stdout.write(`${file}:\n${string}\n`);
             }
