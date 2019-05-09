@@ -9,20 +9,10 @@ In Minecraft, many resources can be referenced by an (optional) namespace and a
 path, such as blocks and items (e.g. `minecraft:stone`/`stone`). This library
 provides an `ID` class, which represents one of these references.
 
-Additionally, it exposes three collections for `ID`s:
+Additionally, it exposes two collections for `ID`s:
 
 -   `IDMap<T>` is a simple mapping from `ID` to `T`;
 -   `IDSet` is a `Set` of `ID`s;
--   `ResolvedIDMap<T, R>` is a mapping from `ID` to `T`, but with support for
-    lazy, cached 'resolving' from that value of `T` to an `R`. For example, this
-    could be used to resolve a tag such as `#minecraft:skeletons` into its
-    actual values, even if it contains references to other tags.
-
-N.B. In most cases it is likely to be more useful to perform this resolving
-stage when the `T` values are first submitted, for cases such as error
-reporting. However, `ResolvedIDMap` may still be useful in these cases as it
-tracks dependents, so if an item is later modified only its dependents need to
-be re-resolved. `ResolvedIDMap::resolveDeps` should be called.
 
 This package is part of the
 [`mcfunction-langserver`](https://github.com/Levertion/mcfunction) project.
