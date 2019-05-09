@@ -8,11 +8,18 @@ describe("IDMap", () => {
         strictEqual(map.get(new ID("minecraft:somePath")), 10);
         map.set(new ID("namespace:secondpath"), 30);
         strictEqual(map.get(new ID("namespace:secondpath")), 30);
+        strictEqual(
+            map.getOrElse(new ID("namespace:secondpath"), () => 25),
+            30
+        );
         ok(map.has(new ID("namespace:secondpath")));
         ok(!map.has(new ID("differentnamespace:secondpath")));
         ok(map.delete(new ID("somePath")));
         ok(!map.delete(new ID("somePath")));
         strictEqual(map.get(new ID("somePath")), undefined);
+        strictEqual(map.getOrElse(new ID("somePath"), () => 45), 45);
+        strictEqual(map.get(new ID("somePath")), 45);
+        strictEqual(map.getOrElse(new ID("somePath"), () => 25), 45);
     });
     it("should allow iteration", () => {
         const map = new IDMap<number>();

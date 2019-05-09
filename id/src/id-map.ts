@@ -86,6 +86,20 @@ export class IDMap<T>
         }
     }
 
+    /**
+     * Get the value of `id` from this map, or create a
+     * value using `defaultFunction` and return it.
+     */
+    public getOrElse(id: ID, defaultFunction: () => T): T {
+        const v = this.get(id);
+        if (v) {
+            return v;
+        }
+        const newValue = defaultFunction();
+        this.namespaceMapOrDefault(id.namespace).set(id.path, newValue);
+        return newValue;
+    }
+
     private namespaceMap(
         namespace: string = ID.DEFAULT_NAMESPACE
     ): Map<string, T> | undefined {
