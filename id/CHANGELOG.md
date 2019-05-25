@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/Levertion/mcfunction/compare/minecraft-id@0.1.0...minecraft-id@0.1.1) (2019-05-25)
+
+**Note:** Version bump only for package minecraft-id
+
+
+
+
+
 # 0.1.0 (2019-04-26)
 
 
