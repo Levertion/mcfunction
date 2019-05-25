@@ -26,12 +26,12 @@
         "url": "https://github.com/Levertion/mcfunction/issues"
     },
     "devDependencies": {
-        "@types/mocha": "5.2.0",
+        "@types/mocha": "5.2.6",
         "mocha": "6.0.2",
         "ts-mocha": "6.0.0",
         "tslint": "5.14.0",
         "typedoc": "0.14.2",
-        "typescript": "3.4.1"
+        "typescript": "3.4.5"
     },
     "dependencies": {
         "tslib": "1.9.3"

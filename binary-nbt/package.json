@@ -38,13 +38,13 @@
     "devDependencies": {
         "@types/long": "4.0.0",
         "@types/mkdirp": "0.5.2",
-        "@types/mocha": "5.2.0",
+        "@types/mocha": "5.2.6",
         "@types/node": "10.0.3",
         "mocha": "6.0.2",
         "ts-mocha": "6.0.0",
         "tslint": "5.14.0",
         "typedoc": "0.14.2",
-        "typescript": "3.4.1"
+        "typescript": "3.4.5"
     },
     "homepage": "https://github.com/Levertion/mcfunction#readme",
     "files": [
