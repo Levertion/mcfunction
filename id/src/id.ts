@@ -61,7 +61,6 @@ export class ID {
      */
     public readonly namespace?: string;
     public readonly path: string;
-
     /**
      * Create a new ID.
      *
@@ -88,6 +87,10 @@ export class ID {
         }
     }
 
+    public logicalNamespace() {
+        return this.namespace || ID.DEFAULT_NAMESPACE;
+    }
+
     /**
      * Convert this ID into a string. This also allows IDs to be used in
      * certain places where strings are expected, most notably in template literals.
@@ -101,7 +104,7 @@ export class ID {
      * ```
      */
     public toString(): string {
-        return `${this.namespace || ID.DEFAULT_NAMESPACE}${ID.SEP}${this.path}`;
+        return `${this.logicalNamespace()}${ID.SEP}${this.path}`;
     }
     /**
      * Test if this is the same ID as `other`. This treats a missing namespace as if
