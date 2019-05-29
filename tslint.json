@@ -5,6 +5,8 @@
         "variable-name": {
             "options": ["allow-leading-underscore", "allow-pascal-case"]
         },
-        "max-classes-per-file": false
+        "max-classes-per-file": false,
+        "await-promise": true,
+        "no-floating-promises": true
     }
 }
