@@ -1,4 +1,5 @@
-import { IDMap, IDSet, ResolvedIDMap } from "minecraft-id";
+import { ID, IDMap, IDSet } from "minecraft-id";
+import { Resource } from "../resource";
 import { Level, Scoreboard } from "./nbt-data";
 
 /**
@@ -18,9 +19,11 @@ export interface MinecraftData {
     rootPaths: Map<string, RootID>;
     datapacks: Map<DataPackID, Datapack>;
     /**
-     *  The current highest `DataSourceID`. Incremented if a new datasource is added
+     * The current highest `DataPackID`. Incremented if a new datapack is added
+     *
+     * These are globally unique, even though they only need strictly to be unique within roots
      */
-    max_source: DataPackID;
+    max_pack: DataPackID;
     /**
      * The current highest `RootID`. Incremented if a new root is added
      */
@@ -52,18 +55,18 @@ export interface MinecraftData {
 }
 
 //#region Resource data
-/**
- * A Tag JSON file
- */
-export interface Tag {
-    replace?: boolean;
-    values: string[];
+
+export interface MaybeTagRef {
+    tag?: boolean;
+    id: ID;
 }
 
+export interface Tag {
+    replace: boolean;
+    values: MaybeTagRef[];
+}
 /**
  * Information about an advancement.
- *
- * FIXME: Change to use the full structure of the file
  */
 export interface Advancement {
     criteria: Set<string>;
@@ -77,37 +80,18 @@ export interface McmetaFile {
 }
 
 export interface ResolvedTag {
-    results: string[];
+    results: ID[];
+    loopRoots?: ID[];
 }
 
-/**
- * A value which is defined in Vanilla and may also be defined in user code.
- *
- * FIXME: Make this a class with support for getting the set of enabled values
- */
-export interface VanillaOrUser<T> {
-    global: T;
-    locals: Map<
-        RootID,
-        // If the root is not a world type root
-        | T
-        // If the root is not a "world" type root, so has more than one Datapack
-        // FIXME: Consider unifying this and the T
-        | Map<DataPackID, T>
-    >;
-}
-
-type TagMap = ResolvedResourceMap<Tag, ResolvedTag>;
-
-type ResourceSet = VanillaOrUser<IDSet>;
-type ResourceMap<T> = VanillaOrUser<IDMap<T>>;
-type ResolvedResourceMap<T, R> = VanillaOrUser<ResolvedIDMap<T, R>>;
+type TagMap = Resource<Tag, ResolvedTag>;
+type ResourceSet = Resource<undefined>;
 
 /**
  * The resources which are supported.
  */
 export interface Resources {
-    advancements: ResourceMap<Advancement>;
+    advancements: Resource<Advancement>;
     block_tags: TagMap;
     entity_tags: TagMap;
     fluid_tags: TagMap;

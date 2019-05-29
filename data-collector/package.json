@@ -30,17 +30,21 @@
         "url": "https://github.com/Levertion/mcfunction/issues"
     },
     "devDependencies": {
+        "@types/fs-extra": "5.0.5",
+        "@types/long": "4.0.0",
         "@types/mocha": "5.2.0",
+        "@types/node-fetch": "2.3.3",
         "mocha": "6.0.2",
         "ts-mocha": "6.0.0",
         "tslint": "5.14.0",
         "typedoc": "0.14.2",
-        "typescript": "3.4.1",
-        "@types/long": "4.0.0"
+        "typescript": "3.4.1"
     },
     "dependencies": {
-        "minecraft-id": "^0.1.0",
+        "fs-extra": "7.0.1",
         "long": "4.0.0",
+        "minecraft-id": "^0.1.0",
+        "node-fetch": "2.4.1",
         "tslib": "1.9.3"
     },
     "homepage": "https://github.com/Levertion/mcfunction#readme",
