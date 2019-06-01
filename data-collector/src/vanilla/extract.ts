@@ -1,26 +1,53 @@
 import { readJSON } from "fs-extra";
 import { ID, IDMap, IDSet } from "minecraft-id";
 import { join } from "path";
-import { MinecraftData, RegistryNames } from "../types/data";
-import { merge } from "../utils";
-
-export const keys = Object.keys as <T>(o: T) => Array<Extract<keyof T, string>>;
+import { ErrorReporter } from "../errors";
+import { Resource } from "../resource";
+import { getDataFolderResources } from "../resources/collect";
+import { ResourceKind, resourceKinds } from "../resources/resource_specific";
+import {
+    MinecraftData,
+    RegistryNames,
+    Resources,
+    Validators
+} from "../types/data";
+import { keys, merge, UnionToIntersection } from "../utils";
 
 export async function getDataFromJar(
     generatedFolder: string,
-    globalVersion: string
+    globalVersion: string,
+    reporter: ErrorReporter
 ): Promise<MinecraftData> {
-    const values = await Promise.all([
-        getBlocks(generatedFolder),
-        getCommands(generatedFolder),
-        getRegistries(generatedFolder),
+    const [values, resourceData] = await Promise.all([
+        Promise.all([
+            getBlocks(generatedFolder),
+            getCommands(generatedFolder),
+            getRegistries(generatedFolder)
+        ]),
         getResources(generatedFolder)
     ]);
     const result: MinecraftData = merge(...values, {
         global_version: globalVersion,
+        reporter,
+        resources: ({} as any) as Resources,
+        validators: ({} as any) as Validators,
         ...getDefaults()
     });
-    return result;
+    for (const key of keys(resourceKinds)) {
+        const oneTime = resourceKinds[key].onetime(
+            reporter,
+            // Funky type inference
+            key as UnionToIntersection<keyof Resources>,
+            result
+        );
+        const resource = new Resource(
+            oneTime.resolver as any,
+            resourceData[key] || new IDMap()
+        );
+        result.resources[key] = resource as any;
+        result.validators[key] = oneTime.validator as any;
+    }
+    return result as MinecraftData;
 }
 
 async function getRegistries(
@@ -54,10 +81,28 @@ async function getRegistries(
     return { registries };
 }
 
-async function getResources(
-    dataDir: string
-): Promise<Pick<MinecraftData, "resources">> {
-    return { resources: {} };
+const blankReporter: ErrorReporter = {
+    addError: () => undefined,
+    removeError: () => undefined
+};
+
+type VanillaResources = { [K in keyof Resources]?: IDMap<ResourceKind<K>> };
+async function getResources(dataDir: string): Promise<VanillaResources> {
+    const map: VanillaResources = {};
+    await getDataFolderResources(
+        join(dataDir, "data"),
+        (kind, id, value) => {
+            let inner = map[kind];
+            if (!inner) {
+                inner = new IDMap() as any;
+                map[kind] = inner;
+            }
+            const innerActual = inner as IDMap<any>;
+            innerActual.set(id, value);
+        },
+        blankReporter
+    );
+    return map;
 }
 
 // TODO: Expose this for caches too

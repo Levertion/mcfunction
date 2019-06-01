@@ -1,5 +1,7 @@
 import { ID, IDMap, IDSet } from "minecraft-id";
+import { ErrorReporter } from "../errors";
 import { Resource } from "../resource";
+import { ResourceKind } from "../resources/resource_specific";
 import { Level, Scoreboard } from "./nbt-data";
 
 /**
@@ -24,6 +26,7 @@ export interface MinecraftData {
      * These are globally unique, even though they only need strictly to be unique within roots
      */
     max_pack: DataPackID;
+    reporter: ErrorReporter;
     /**
      * The current highest `RootID`. Incremented if a new root is added
      */
@@ -33,6 +36,8 @@ export interface MinecraftData {
      * The resources from datapacks. This includes both local and global resources.
      */
     resources: Resources;
+
+    validators: Validators;
 
     /**
      * The Minecraft version of the global data
@@ -102,6 +107,10 @@ export interface Resources {
     recipes: ResourceSet;
     structures: ResourceSet;
 }
+
+export type Validator<T> = (value: T, id: ID, pack: DataPackID) => void;
+
+export type Validators = { [K in keyof Resources]: Validator<ResourceKind<K>> };
 
 //#endregion
 

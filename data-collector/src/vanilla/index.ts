@@ -1,3 +1,4 @@
+import { ErrorReporter } from "../errors";
 import { MinecraftData } from "../types/data";
 import { getDataFromJar } from "./extract";
 import { downloadJarIntoTemp, runGenerator } from "./jar";
@@ -24,6 +25,7 @@ export interface DataCollectionOptions {
  * - Return the data
  */
 export async function downloadVanillaData(
+    reporter: ErrorReporter,
     options: DataCollectionOptions = {},
     current?: MinecraftData
 ): Promise<MinecraftData> {
@@ -35,7 +37,7 @@ export async function downloadVanillaData(
     const version = await getVersionManifest(versionToUse, manifest);
     const tempFolder = await downloadJarIntoTemp(version);
     const result = await runGenerator(tempFolder, options);
-    return getDataFromJar(result, versionToUse);
+    return getDataFromJar(result, versionToUse, reporter);
 }
 
 /**
@@ -45,8 +47,9 @@ export async function downloadVanillaData(
  * - Call downloadVanillaData otherwise
  */
 export async function getVanillaData(
+    reporter: ErrorReporter,
     options?: DataCollectionOptions
 ): Promise<MinecraftData> {
     // TODO
-    return downloadVanillaData(options);
+    return downloadVanillaData(reporter, options);
 }

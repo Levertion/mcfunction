@@ -1,4 +1,6 @@
-import { MinecraftData, RootID } from "../types/data";
+import { getDataFolderResources } from "../resources/collect";
+import { getDataFolder } from "../resources/resource_specific";
+import { DataPackID, MinecraftData, RootID } from "../types/data";
 import { findRootPath } from "./path";
 
 export async function addRootFor(
@@ -17,6 +19,7 @@ export async function addRootFor(
         switch (type) {
             case "datapack":
                 data.roots.set(id, { path, id, type });
+                addDataForDatapack(id);
                 break;
             case "functions":
                 data.roots.set(id, { path, id, type });
@@ -38,4 +41,18 @@ export async function addRootFor(
         return id;
     }
     return undefined;
+}
+
+async function addDataForDatapack(
+    root: RootID,
+    pack: DataPackID,
+    data: MinecraftData
+) {
+    const dataFolder = getDataFolder(data, pack);
+    await getDataFolderResources(
+        dataFolder,
+        (kind, id, value) =>
+            data.resources[kind].set(id, root, value as any, pack),
+        data.reporter
+    );
 }

@@ -7,6 +7,7 @@ export enum ErrorKind {
      * of anything
      */
     INVALID_JSON,
+    WRONG_EXTENSION,
     INVALID_TAG_MEMBERS,
     LOOPING_TAG,
     INVALID_TAG_DEPENDENCY
@@ -17,7 +18,7 @@ export interface ErrorReporter {
     removeError(file: string, kind: ErrorKind): void;
 }
 
-export type Error = InvalidJSON | TagError;
+export type Error = InvalidJSON | TagError | ExtensionError;
 
 export interface InvalidJSON {
     kind: ErrorKind.INVALID_JSON;
@@ -25,6 +26,12 @@ export interface InvalidJSON {
      * The error message from JSON.parse
      */
     message: string;
+}
+
+export interface ExtensionError {
+    kind: ErrorKind.WRONG_EXTENSION;
+    expected: string;
+    actual: string;
 }
 
 export interface TagError {

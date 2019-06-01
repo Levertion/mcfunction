@@ -10,7 +10,8 @@ import {
     ResolvedTag,
     Resources,
     RootID,
-    Tag
+    Tag,
+    Validator
 } from "../types/data";
 
 /**
@@ -47,21 +48,26 @@ interface ResourceInfoInner<K extends keyof Resources, T, R> {
         /**
          * At this point the file path has been lost, so will need to be reconstructed if required
          */
-        validator?: (value: T, id: ID, pack: DataPackID) => void;
+        validator?: Validator<T>;
     };
     loadFile: (path: string, reporter: ErrorReporter) => Promise<T | undefined>;
+    allowUndefined?: boolean;
     folders: string[];
     extension: string;
 }
 
-type ResourceInfo<K extends keyof Resources> = Resources[K] extends Resource<
+type ResourceKeyInfo<K extends keyof Resources> = Resources[K] extends Resource<
     infer T,
     infer R
 >
     ? ResourceInfoInner<K, T, R>
     : never;
 
-type ResourceMap = { [K in keyof Resources]: ResourceInfo<K> };
+type ResourceInfo = { [K in keyof Resources]: ResourceKeyInfo<K> };
+
+export type ResourceKind<
+    K extends keyof Resources
+> = Resources[K] extends Resource<infer T, any> ? T : never;
 
 interface AdvancementFile {
     criteria: Record<string, unknown>;
@@ -89,6 +95,7 @@ function createSimpleInfo(
     folders: string[]
 ): ResourceInfoInner<any, undefined, undefined> {
     return {
+        allowUndefined: true,
         extension,
         folders,
         loadFile: async () => undefined,
@@ -104,7 +111,7 @@ function createTagInfo(
     validateLocally: boolean = false
 ): ResourceInfoInner<any, Tag, ResolvedTag> {
     return {
-        extension: "json",
+        extension: ".json",
         folders: ["tags", folder],
         loadFile: async (path, reporter) => {
             const value: TagJSON | undefined = await readJSONWithErrorReporting(
@@ -253,7 +260,8 @@ function createSimpleJSONInfo(
     ...folders: string[]
 ): ResourceInfoInner<any, undefined, undefined> {
     return {
-        extension: "json",
+        allowUndefined: true,
+        extension: ".json",
         folders,
         loadFile: async (path, reporter) => {
             await readJSONWithErrorReporting(reporter, path);
@@ -265,9 +273,9 @@ function createSimpleJSONInfo(
     };
 }
 
-export const resourceKinds: ResourceMap = {
+export const resourceKinds: ResourceInfo = {
     advancements: {
-        extension: "json",
+        extension: ".json",
         folders: ["advancements"],
         loadFile: async (path, reporter) => {
             const file: AdvancementFile = await readJSONWithErrorReporting(
@@ -291,13 +299,13 @@ export const resourceKinds: ResourceMap = {
     function_tags: createTagInfo("functions", (id, data, root) =>
         data.resources.functions.has(id, root)
     ),
-    functions: createSimpleInfo("mcfunction", ["functions"]),
+    functions: createSimpleInfo(".mcfunction", ["functions"]),
     item_tags: createTagInfo("items", (id, data) =>
         data.registries["minecraft:item"].has(id)
     ),
     loot_tables: createSimpleJSONInfo("loot_tables"),
     recipes: createSimpleJSONInfo("recipes"),
-    structures: createSimpleInfo("nbt", ["structures"])
+    structures: createSimpleInfo(".nbt", ["structures"])
 };
 
 export function getPath(
@@ -316,7 +324,7 @@ export function getPath(
     );
 }
 
-function getDataFolder(data: MinecraftData, packid: DataPackID): string {
+export function getDataFolder(data: MinecraftData, packid: DataPackID): string {
     const pack = data.datapacks.get(packid);
     if (pack) {
         const root = data.roots.get(pack.root);
