@@ -1,6 +1,6 @@
 {
     "name": "simple-result",
-    "version": "0.1.6-alpha.0",
+    "version": "0.1.6-alpha.1",
     "description": "Yet another simple Result type, inspired by Rust",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",

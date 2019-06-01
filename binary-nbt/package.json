@@ -1,6 +1,6 @@
 {
     "name": "binary-nbt",
-    "version": "0.5.6-alpha.0",
+    "version": "0.5.6-alpha.1",
     "description": "A serializer and deserializer for Minecraft's NBT archives with a lossless but ergonomic output format",
     "main": "lib/index.js",
     "bin": "lib/bin.js",
