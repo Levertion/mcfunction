@@ -27,7 +27,7 @@ be re-resolved. `ResolvedIDMap::resolveDeps` should be called.
 This package is part of the
 [`mcfunction-langserver`](https://github.com/Levertion/mcfunction) project. It
 is published automatically - see
-[the publishing strategy](https://github.com/Levertion/mcfunction/tree/lerna-prerelease#publishing-strategy)
+[the publishing strategy](https://github.com/Levertion/mcfunction#publishing-strategy).
 
 ## Examples
 
