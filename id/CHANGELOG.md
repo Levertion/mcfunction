@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4-alpha.2](https://github.com/Levertion/mcfunction/compare/minecraft-id@0.1.4-alpha.1...minecraft-id@0.1.4-alpha.2) (2019-06-01)
+
+
+### Bug Fixes
+
+* **docs:** update dist-tags ([f3c47e0](https://github.com/Levertion/mcfunction/commit/f3c47e0))
+
+
+
+
+
 ## [0.1.4-alpha.1](https://github.com/Levertion/mcfunction/compare/minecraft-id@0.1.4-alpha.0...minecraft-id@0.1.4-alpha.1) (2019-06-01)
 
 **Note:** Version bump only for package minecraft-id
