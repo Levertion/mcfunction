@@ -41,11 +41,15 @@ We use [bors](https://bors.tech/) to manage merging pull requests.
 
 The packages are tested using node 10 and 8.
 
-### npm packages
+### Publishing strategy
 
 The packages are automatically released on `npm` once the tests pass on the
-master branch, under the `next` tag. For versions of packages which are more
-stable, the tag is manually updated to `latest`.
+master branch, under the `master` npm tag using lerna's
+[conventional prerelease](https://github.com/lerna/lerna/blob/master/commands/version/README.md#--conventional-prerelease).
+This are then
+['graduated'](https://github.com/lerna/lerna/blob/master/commands/version/README.md#--conventional-graduate)
+on a weekly Travis cron job. This may fail in a given week if a PR is merged at
+the wrong time (i.e just before the cron job)
 
 ### License
 
