@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.5.6-alpha.2...binary-nbt@0.5.6) (2019-06-01)
+
+**Note:** Version bump only for package binary-nbt
+
+
+
+
+
 ## [0.5.6-alpha.2](https://github.com/Levertion/mcfunction/compare/binary-nbt@0.5.6-alpha.1...binary-nbt@0.5.6-alpha.2) (2019-06-01)
 
 
