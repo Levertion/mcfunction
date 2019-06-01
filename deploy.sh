@@ -1,9 +1,8 @@
 echo "Starting deploy script"
 
-
-if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
- if [ -z "$CI" ]; then
-    echo "This commit would run the deploy step"
+run () {
+  if [ -z "$CI" ]; then
+    echo "This commit would run '$1'"
   else
     echo "Checking out $TRAVIS_BRANCH"
     git checkout $TRAVIS_BRANCH
@@ -25,7 +24,7 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
         git checkout origin/gh-pages
         git checkout --orphan gh-pages-orphan
       )
-      npx lerna publish --conventional-prerelease --yes --dist-tag=master
+      eval $1
       (
         cd docs
         git add .
@@ -38,9 +37,14 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
       echo "Not on latest $TRAVIS_BRANCH, not pushing"
     fi
   fi
+}
+
+
+if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
+    run "npx lerna publish --conventional-prerelease --yes --dist-tag=master"
 else
-  if [[$TRAVIS_EVENT_TYPE == "cron"]]; then
+  if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]]; then
     # This will not happen if the publish step hasn't happened yet
-    npx lerna publish --conventional-graduate --yes
+    run "npx lerna publish --conventional-graduate --yes"
   fi
 fi
