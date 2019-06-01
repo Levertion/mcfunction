@@ -39,7 +39,7 @@ if [[ `git log -1 --pretty=%B` != "Publish"* ]]; then
     fi
   fi
 else
-  if [$TRAVIS_EVENT_TYPE == "cron"]; then
+  if [[$TRAVIS_EVENT_TYPE == "cron"]]; then
     # This will not happen if the publish step hasn't happened yet
     npx lerna publish --conventional-graduate --yes
   fi
