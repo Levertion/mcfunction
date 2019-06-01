@@ -41,7 +41,7 @@ We use [bors](https://bors.tech/) to manage merging pull requests.
 
 The packages are tested using node 10 and 8.
 
-### npm packages
+### Publishing strategy
 
 The packages are automatically released on `npm` once the tests pass on the
 master branch, under the `master` npm tag using lerna's

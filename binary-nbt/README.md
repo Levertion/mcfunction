@@ -37,7 +37,9 @@ interested. We also only support big endian NBT, so the pocket edition nbt is
 not yet supported
 
 This package is part of the
-[`mcfunction-langserver`](https://github.com/Levertion/mcfunction) project.
+[`mcfunction-langserver`](https://github.com/Levertion/mcfunction) project. It
+is published automatically - see
+[the publishing strategy](https://github.com/Levertion/mcfunction/tree/lerna-prerelease#publishing-strategy)
 
 ## API
 

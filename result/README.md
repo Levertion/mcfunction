@@ -12,10 +12,10 @@ string was one of the options, whereas a failure would imply that it wasn't. In
 this case, the parsed string could still be returned, such as to construct a
 more specific error message.
 
-<!-- TODO: change this paragraph to be more useful/general: -->
-
 This package is part of the
-[`mcfunction-langserver`](https://github.com/Levertion/mcfunction) project.
+[`mcfunction-langserver`](https://github.com/Levertion/mcfunction) project. It
+is published automatically - see
+[the publishing strategy](https://github.com/Levertion/mcfunction/tree/lerna-prerelease#publishing-strategy)
 
 ## Example
 
