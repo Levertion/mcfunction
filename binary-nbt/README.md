@@ -1,6 +1,6 @@
 # Binary NBT
 
-[ ![npm](https://img.shields.io/npm/v/binary-nbt.svg?style=flat-square) ![npm (tag)](https://img.shields.io/npm/v/binary-nbt/next.svg?style=flat-square) ![npm](https://img.shields.io/npm/dt/binary-nbt.svg?style=flat-square) ](http://npm.im/binary-nbt)
+[ ![npm](https://img.shields.io/npm/v/binary-nbt.svg?style=flat-square) ![npm (tag)](https://img.shields.io/npm/v/binary-nbt/master.svg?style=flat-square) ![npm](https://img.shields.io/npm/dt/binary-nbt.svg?style=flat-square) ](http://npm.im/binary-nbt)
 [![docs](https://img.shields.io/badge/docs-TypeDoc-blueviolet.svg?style=flat-square)](https://levertion.github.io/mcfunction/binary-nbt)
 
 <!-- Force update -->
