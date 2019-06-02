@@ -38,7 +38,7 @@
     "devDependencies": {
         "@types/long": "4.0.0",
         "@types/mkdirp": "0.5.2",
-        "@types/mocha": "5.2.6",
+        "@types/mocha": "5.2.7",
         "@types/node": "10.0.3",
         "mocha": "6.1.4",
         "ts-mocha": "6.0.0",
