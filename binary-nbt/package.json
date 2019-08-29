@@ -44,7 +44,7 @@
         "ts-mocha": "6.0.0",
         "tslint": "5.17.0",
         "typedoc": "0.14.2",
-        "typescript": "3.4.5"
+        "typescript": "3.6.2"
     },
     "homepage": "https://github.com/Levertion/mcfunction#readme",
     "files": [
