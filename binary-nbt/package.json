@@ -30,7 +30,7 @@
         "url": "https://github.com/Levertion/mcfunction/issues"
     },
     "dependencies": {
-        "cac": "6.4.3",
+        "cac": "6.5.7",
         "long": "4.0.0",
         "mkdirp": "0.5.1",
         "tslib": "1.9.3"
