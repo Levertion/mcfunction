@@ -14,7 +14,7 @@
     },
     "devDependencies": {
         "lerna": "^3.14.1",
-        "prettier": "1.17.1",
+        "prettier": "2.0.4",
         "tslint-config-prettier": "1.18.0"
     },
     "license": "MIT",
