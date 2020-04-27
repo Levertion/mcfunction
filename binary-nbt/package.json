@@ -40,7 +40,7 @@
         "@types/mkdirp": "0.5.2",
         "@types/mocha": "5.2.7",
         "@types/node": "10.0.3",
-        "mocha": "6.1.4",
+        "mocha": "7.1.2",
         "ts-mocha": "6.0.0",
         "tslint": "5.17.0",
         "typedoc": "0.14.2",
