@@ -27,7 +27,7 @@
     },
     "devDependencies": {
         "@types/mocha": "5.2.7",
-        "mocha": "6.1.4",
+        "mocha": "8.1.0",
         "ts-mocha": "6.0.0",
         "tslint": "5.17.0",
         "typedoc": "0.14.2",
