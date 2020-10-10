@@ -33,7 +33,7 @@
         "cac": "6.4.3",
         "long": "4.0.0",
         "mkdirp": "0.5.1",
-        "tslib": "1.9.3"
+        "tslib": "2.0.3"
     },
     "devDependencies": {
         "@types/long": "4.0.0",
